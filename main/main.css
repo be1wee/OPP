@@ -1,0 +1,117 @@
+@font-face {
+    font-family: "cygre";
+    src: url(/fonts/Cygre-Regular.ttf);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "cygre";
+    color: var(--text-color);
+}
+a{
+    text-decoration: none;
+}
+:root{
+    --gap: 3vw;
+    --text-color: white;
+}
+
+header{
+    --paddint-top-bot: 10px;
+    width: 100vw;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: fixed;
+    z-index: 999;
+
+    padding: var(--paddint-top-bot) var(--gap) var(--paddint-top-bot) var(--gap);
+
+    background-color: rgba(0, 0, 0, 0.406);
+    backdrop-filter: blur(20px);
+
+}
+
+#project-control-panel{
+    display: flex;
+    gap: var(--gap); 
+}
+
+.profile{
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    gap:1vw;
+}
+#icon-account{
+    --size: 50px;
+    height: var(--size);
+    width: var(--size);
+    
+    border-radius: 100%;
+}
+
+
+#background-image{
+    z-index: -1;
+
+    position: fixed;
+    left:50%;
+    top:50%;
+    transform: translateY(-50%) translateX(-50%);
+    
+
+    width: 90vw;
+}
+
+body{
+    background-color: black;
+}::-webkit-scrollbar{
+    display: none;
+}
+
+
+.list-project{
+    padding-top: 7vw;
+    padding-bottom: 7vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    gap: 5vw;
+    width: 70vw;
+}
+.project{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1vw 4vw 1vw 4vw;
+
+    border-radius: 3vw;
+
+    backdrop-filter: blur(10px);
+    border: transparent 1px solid;
+    background: rgba(78, 78, 78, 0.474);
+    box-shadow: rgba(78, 78, 78, 0.474) 0 0 5vw 1px;
+}
+.project-icon{
+    --size: 100px;
+    height: var(--size);
+    width: var(--size);
+    object-fit: contain;
+}
+
+.project-text{
+    color: white;
+    font-size: 1.5vw;
+    font-weight: 100;
+    letter-spacing: 2px;
+
+    text-shadow: white 0 0 1vw;
+}
