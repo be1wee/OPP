@@ -1,12 +1,12 @@
 @font-face {
-    font-family: "gost";
-    src: url(/fonts/gost.TTF);
+    font-family: "cygre";
+    src: url(/fonts/Cygre-Regular.ttf);
 }
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "gost";
+    font-family: "cygre";
 }
 :root{
     --text-color: white;
@@ -18,36 +18,25 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+
+    background: linear-gradient(90deg, rgb(62, 0, 148), rgb(254, 131, 131));
 }::-webkit-scrollbar{
     display: none;
 }
-#background{
-    position: fixed;
-    object-fit: fill;
-    z-index: -1;
-    height: 100vh;
-    width: 100vw;
 
-    filter: brightness(0.7);
-}
-main{
-    display: flex;
-    flex-direction: column;
-
-    border-radius: 5vw;
-    backdrop-filter: blur(10px);
-    background: rgba(0, 0, 0, 0.251);
-
-    box-shadow: 0 0 1vw 1px black;
-
-    color: var(--text-color);
-}
 #login-container{
     display: flex;
     flex-direction: column;
 
     gap: var(--gap);
     padding: var(--gap);
+
+    border-radius: 5vw;
+    backdrop-filter: blur(2px);
+    background: rgba(158, 158, 158, 0.251);
+    box-shadow: 0 0 2vw 10px rgba(255, 255, 255, 0.251);
+
+    color: var(--text-color);
 }
 
 
@@ -83,17 +72,10 @@ form{
 a{
     text-decoration: none;
 }
-#create-acc-btn{
-    font-size: 2vw;
-    color: red;
-    text-shadow: red 0px 0px 3px;
 
-    display: flex;
-    align-self: center;
-}
 h1{
-    font-size: 4vw;
-    letter-spacing: 0.5vw;
+    font-size: 2vw;
+    letter-spacing: 0.2vw;
     font-weight: 600;
 }
 button{
@@ -104,7 +86,9 @@ button{
     justify-content: center;
     align-items: center;
 
-    background: rgb(157, 23, 23);
+    background: rgba(24, 157, 0, 0.75);
+    text-shadow: 0 0 1vw white;
+    box-shadow: 0 0 1vw 1px rgba(24, 157, 0, 0.75);
 
     padding: 1vw;
     border-radius: 1vw;
@@ -117,4 +101,12 @@ button{
 }
 button:active{
     transform: scale(0.9);   
+}
+
+
+#back-btn{
+    height: 5vw;
+    position: absolute;
+    left: 0;
+    top:0;
 }
