@@ -1,0 +1,95 @@
+@font-face {
+    font-family: "fehero";
+    src: url(/fonts/FEHero-Regular.ttf);
+}
+@font-face {
+    font-family: "gost";
+    src: url(/fonts/gost.TTF);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "gost";
+}
+:root{
+    --text-color: white;
+    --gap: 5vw;
+}
+body{
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}::-webkit-scrollbar{
+    display: none;
+}
+#background{
+    position: fixed;
+    object-fit: fill;
+    z-index: -1;
+    height: 100vh;
+    width: 100vw;
+}
+main{
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 5vw;
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.251);
+
+    color: var(--text-color);
+}
+#login-container{
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--gap);
+    padding: var(--gap);
+}
+
+#btn-login{
+    background: rgba(8, 0, 255, 0.205);
+}
+#btn-reg{
+    background: rgba(0, 255, 34, 0.205);
+}
+input{
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+}
+fieldset{
+    border: none;
+    background: rgba(0, 0, 0, 0.511);
+    padding: 0.5vw;
+    border-radius: 1vw;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+a{
+    text-decoration: none;
+    color: var(--text-color);
+}
+h1{
+    letter-spacing: 0.5vw;
+    font-weight: 600;
+}
+button{
+    border: none;
+    padding: 0.5vw;
+    border-radius: 1vw;
+    color: var(--text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.3vw;
+    transition: 0.1s ease;
+}
+button:active{
+    transform: scale(0.9);   
+}
