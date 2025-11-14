@@ -27,12 +27,12 @@ body{
 }
 #background{
     position: fixed;
-    object-fit: fill;
+    object-fit: cover;
     z-index: -1;
     height: 100vh;
     width: 100vw;
 
-    filter: brightness(0.7);
+    filter: brightness(0.4);
 }
 main{
     display: flex;
