@@ -1,117 +1,221 @@
-@font-face {
-    font-family: "cygre";
-    src: url(/fonts/Cygre-Regular.ttf);
-}
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "cygre";
+    font-family: sans-serif;
     color: var(--text-color);
 }
-a{
+
+a {
     text-decoration: none;
 }
-:root{
+
+:root {
     --gap: 3vw;
     --text-color: white;
 }
 
-header{
-    --paddint-top-bot: 10px;
-    width: 100vw;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    position: fixed;
-    z-index: 999;
-
-    padding: var(--paddint-top-bot) var(--gap) var(--paddint-top-bot) var(--gap);
-
-    background-color: rgba(0, 0, 0, 0.406);
-    backdrop-filter: blur(20px);
-
-}
-
-#project-control-panel{
-    display: flex;
-    gap: var(--gap); 
-}
-
-.profile{
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-
-    gap:1vw;
-}
-#icon-account{
-    --size: 50px;
-    height: var(--size);
-    width: var(--size);
-    
-    border-radius: 100%;
-}
-
-
-#background-image{
-    z-index: -1;
-
-    position: fixed;
-    left:50%;
-    top:50%;
-    transform: translateY(-50%) translateX(-50%);
-    
-
-    width: 90vw;
-}
-
-body{
+body {
     background-color: black;
-}::-webkit-scrollbar{
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
     display: none;
 }
 
+.liquid-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    opacity: 0.1;
+    animation: liquidMove 20s ease-in-out infinite;
+}
 
-.list-project{
-    padding-top: 7vw;
-    padding-bottom: 7vw;
+@keyframes liquidMove {
+    0%, 100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        transform: scale(1.2) rotate(0deg);
+    }
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+        transform: scale(1.3) rotate(180deg);
+    }
+}
 
+.background-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 200px 200px, 150px 150px, 180px 180px, 160px 160px;
+    opacity: 0.3;
+}
+
+header {
+    --padding-top-bot: 10px;
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 999;
+    padding: var(--padding-top-bot) var(--gap) var(--padding-top-bot) var(--gap);
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#project-control-panel {
+    display: flex;
+    gap: var(--gap);
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+.profile {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    padding: 5px 15px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.profile:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#icon-account {
+    --size: 40px;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.list-project {
+    padding-top: 100px;
+    padding-bottom: 50px;
     display: flex;
     flex-direction: column;
-    justify-self: center;
-    gap: 5vw;
-    width: 70vw;
+    align-items: center;
+    gap: 2vw;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-.project{
+
+.project {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    padding: 1vw 4vw 1vw 4vw;
-
-    border-radius: 3vw;
-
-    backdrop-filter: blur(10px);
-    border: transparent 1px solid;
-    background: rgba(78, 78, 78, 0.474);
-    box-shadow: rgba(78, 78, 78, 0.474) 0 0 5vw 1px;
+    padding: 1.5vw 3vw;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    width: 90%;
+    max-width: 1000px;
 }
-.project-icon{
-    --size: 100px;
+
+.project:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.project-icon {
+    --size: 80px;
     height: var(--size);
     width: var(--size);
     object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
-.project-text{
+.project-text {
     color: white;
-    font-size: 1.5vw;
+    font-size: 1.2rem;
     font-weight: 100;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+}
 
-    text-shadow: white 0 0 1vw;
+.project-name {
+    flex: 1;
+    margin-left: 2vw;
+    text-align: left;
+}
+
+.project-id {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+}
+
+
+@media (max-width: 768px) {
+    .list-project {
+        padding-top: 120px;
+        gap: 3vw;
+    }
+    
+    .project {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .project-name {
+        margin-left: 0;
+        text-align: center;
+    }
+    
+    .project-text {
+        font-size: 1rem;
+    }
+    
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    #project-control-panel {
+        gap: 15px;
+    }
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATE PROJECT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <video src="../media/absolute.mp4" id="background" muted loop autoplay></video>
+    
+    <a href="../index.html" id="back-btn">← Back</a>
+    
+    <div class="glass-card">
+        <h1>CREATE PROJECT</h1>
+        
+        <form id="projectForm" method="POST" action="/create-project">
+            <div class="input-group">
+                <label for="name">Project Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter project name" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="subject">Project Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="Enter project subject" required>
+            </div>
+            
+            <button type="submit" class="create-btn">CREATE PROJECT</button>
+        </form>
+    </div>
+</body>
+</html>

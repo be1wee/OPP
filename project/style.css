@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background: #0a0a0a;
+    color: white;
+    min-height: 100vh;
+}
+
+.project-header {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.project-info h1 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.header-controls {
+    display: flex;
+    gap: 15px;
+}
+
+.header-btn {
+    padding: 8px 16px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background: #1a1a1a;
+    color: white;
+    cursor: pointer;
+}
+
+.workspace {
+    padding: 20px;
+    height: calc(100vh - 80px);
+    overflow: auto;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.task-item {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.task-item:hover {
+    border-color: #555;
+    background: #222;
+}
+
+.task-item.main {
+    border-left: 4px solid #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.task-item.child {
+    margin-left: 30px;
+    border-left: 2px solid #444;
+}
+
+.task-item.grandchild {
+    margin-left: 60px;
+    border-left: 1px solid #555;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.task-title {
+    font-size: 1rem;
+    font-weight: bold;
+    flex: 1;
+}
+
+.task-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.meta-tag {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.status-todo {
+    background: rgba(252, 129, 129, 0.2);
+    color: #fc8181;
+}
+
+.status-in-progress {
+    background: rgba(246, 173, 85, 0.2);
+    color: #f6ad55;
+}
+
+.status-completed {
+    background: rgba(72, 187, 120, 0.2);
+    color: #48bb78;
+}
+
+.status-review {
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+}
+
+.deadline {
+    background: rgba(237, 137, 54, 0.2);
+    color: #ed8936;
+}
+
+.assignee {
+    background: rgba(116, 75, 162, 0.2);
+    color: #764ba2;
+}
+
+.task-description {
+    color: #888;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.expand-btn {
+    color: #666;
+    cursor: pointer;
+    user-select: none;
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+.children {
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none;
+}
