@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+    <style>
+        @font-face {
+            font-family: "cygre";
+            src: url(/fonts/Cygre-Regular.ttf);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "cygre", sans-serif;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .project-header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .project-info h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .workspace {
+            padding: 30px;
+            height: calc(100vh - 80px);
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .form-container {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+        }
+        
+        .form-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #0a0a0a;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+        
+        .danger-zone {
+            border: 1px solid #fc8181;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .danger-title {
+            color: #fc8181;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn-primary {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-danger {
+            padding: 12px 24px;
+            border: 1px solid #fc8181;
+            border-radius: 6px;
+            background: transparent;
+            color: #fc8181;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="project-header">
+        <div class="header-left">
+            <a href="../project/index.html" class="back-btn">←</a>
+            <div class="project-info">
+                <h1>Edit Project</h1>
+                <div class="project-id">#PRJ-4892</div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="workspace">
+        <div class="form-container">
+            <h2 class="form-title">Project Settings</h2>
+            <form id="editProjectForm">
+                <div class="form-section">
+                    <h3 class="section-title">Basic Information</h3>
+                    <div class="form-group">
+                        <label for="projectName">Project Name</label>
+                        <input type="text" id="projectName" name="projectName" value="Web Platform Development" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectDescription">Description</label>
+                        <textarea id="projectDescription" name="projectDescription">Development of a complete web platform with user authentication, dashboard, and database integration.</textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">Timeline</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" name="startDate" value="2024-10-01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate" name="endDate" value="2024-12-30">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">Visibility & Access</h3>
+                    <div class="form-group">
+                        <label for="projectVisibility">Project Visibility</label>
+                        <select id="projectVisibility" name="projectVisibility">
+                            <option value="private" selected>Private (Only members)</option>
+                            <option value="team">Team (All team members)</option>
+                            <option value="public">Public (Anyone with link)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="joinRequests">Join Requests</label>
+                        <select id="joinRequests" name="joinRequests">
+                            <option value="open" selected>Open (Anyone can request)</option>
+                            <option value="invite">Invite only</option>
+                            <option value="closed">Closed (No new members)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="danger-zone">
+                    <h3 class="danger-title">Danger Zone</h3>
+                    <div class="form-group">
+                        <label>Delete Project</label>
+                        <p style="color: #888; font-size: 0.9rem; margin-bottom: 10px;">
+                            Once you delete a project, there is no going back. Please be certain.
+                        </p>
+                        <button type="button" class="btn-danger" onclick="confirmDelete()">Delete Project</button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="window.location.href='project.html'">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('editProjectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const projectData = {
+                name: document.getElementById('projectName').value,
+                description: document.getElementById('projectDescription').value,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                visibility: document.getElementById('projectVisibility').value,
+                joinRequests: document.getElementById('joinRequests').value
+            };
+            
+            console.log('Updating project:', projectData);
+            alert('Project updated successfully!');
+            window.location.href = "/";
+        });
+        
+        function confirmDelete() {
+            if (confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
+                alert('Project deleted!');
+                window.location.href = 'index.html';
+            }
+        }
+        
+        document.getElementById('endDate').valueAsDate = new Date('2024-12-30');
+        document.getElementById('startDate').valueAsDate = new Date('2024-10-01');
+    </script>
+</body>
+</html>

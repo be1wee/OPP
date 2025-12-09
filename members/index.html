@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Members</title>
+    <style>
+        @font-face {
+            font-family: "cygre";
+            src: url(/fonts/Cygre-Regular.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "cygre", sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .project-header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .project-info h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-btn {
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #1a1a1a;
+            color: white;
+            cursor: pointer;
+        }
+
+        .workspace {
+            padding: 20px;
+            height: calc(100vh - 80px);
+            overflow: auto;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .member-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .member-card:hover {
+            border-color: #555;
+            background: #222;
+        }
+
+        .member-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .member-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .member-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+
+        .member-role {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .member-tasks {
+            border-top: 1px solid #333;
+            padding-top: 10px;
+        }
+
+        .task-assigned {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            font-size: 0.8rem;
+        }
+
+        .task-name {
+            color: #aaa;
+        }
+
+        .task-status {
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+        }
+
+        .status-completed {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+        }
+
+        .status-in-progress {
+            background: rgba(246, 173, 85, 0.2);
+            color: #f6ad55;
+        }
+
+        .add-task-btn {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px dashed #555;
+            border-radius: 6px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #0a0a0a;
+            color: white;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="project-header">
+        <div class="header-left">
+            <a href="../project/index.html" class="back-btn">←</a>
+            <div class="project-info">
+                <h1>Project Members</h1>
+                <div class="project-id">#PRJ-4892</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="workspace">
+        <div class="members-grid">
+            <div class="member-card" onclick="showMemberModal('Alex')">
+                <div class="member-header">
+                    <div class="member-avatar">A</div>
+                    <div class="member-info">
+                        <h3>Alex Johnson</h3>
+                        <div class="member-role">Backend Developer</div>
+                    </div>
+                </div>
+                <div class="member-tasks">
+                    <div class="task-assigned">
+                        <span class="task-name">User Authentication</span>
+                        <span class="task-status status-completed">Done</span>
+                    </div>
+                    <div class="task-assigned">
+                        <span class="task-name">API Endpoints</span>
+                        <span class="task-status status-in-progress">In Progress</span>
+                    </div>
+                    <button class="add-task-btn" onclick="assignTask('Alex')">+ Assign Task</button>
+                </div>
+            </div>
+
+            <div class="member-card" onclick="showMemberModal('Sarah')">
+                <div class="member-header">
+                    <div class="member-avatar">S</div>
+                    <div class="member-info">
+                        <h3>Sarah Miller</h3>
+                        <div class="member-role">Frontend Developer</div>
+                    </div>
+                </div>
+                <div class="member-tasks">
+                    <div class="task-assigned">
+                        <span class="task-name">UI Components</span>
+                        <span class="task-status status-completed">Done</span>
+                    </div>
+                    <div class="task-assigned">
+                        <span class="task-name">Dashboard</span>
+                        <span class="task-status status-in-progress">In Progress</span>
+                    </div>
+                    <button class="add-task-btn" onclick="assignTask('Sarah')">+ Assign Task</button>
+                </div>
+            </div>
+
+            <div class="member-card" onclick="showMemberModal('David')">
+                <div class="member-header">
+                    <div class="member-avatar">D</div>
+                    <div class="member-info">
+                        <h3>David Chen</h3>
+                        <div class="member-role">Database Admin</div>
+                    </div>
+                </div>
+                <div class="member-tasks">
+                    <div class="task-assigned">
+                        <span class="task-name">Database Schema</span>
+                        <span class="task-status status-completed">Done</span>
+                    </div>
+                    <button class="add-task-btn" onclick="assignTask('David')">+ Assign Task</button>
+                </div>
+            </div>
+
+            <div class="member-card" onclick="showMemberModal('Maria')">
+                <div class="member-header">
+                    <div class="member-avatar">M</div>
+                    <div class="member-info">
+                        <h3>Maria Garcia</h3>
+                        <div class="member-role">QA Engineer</div>
+                    </div>
+                </div>
+                <div class="member-tasks">
+                    <div class="task-assigned">
+                        <span class="task-name">Testing API</span>
+                        <span class="task-status status-in-progress">In Progress</span>
+                    </div>
+                    <button class="add-task-btn" onclick="assignTask('Maria')">+ Assign Task</button>
+                </div>
+            </div>
+
+            <div class="member-card" onclick="showMemberModal('Mike')">
+                <div class="member-header">
+                    <div class="member-avatar">M</div>
+                    <div class="member-info">
+                        <h3>Mike Wilson</h3>
+                        <div class="member-role">UI/UX Designer</div>
+                    </div>
+                </div>
+                <div class="member-tasks">
+                    <div class="task-assigned">
+                        <span class="task-name">Design System</span>
+                        <span class="task-status status-completed">Done</span>
+                    </div>
+                    <button class="add-task-btn" onclick="assignTask('Mike')">+ Assign Task</button>
+                </div>
+            </div>
+
+            <div class="member-card" onclick="showMemberModal('Emma')">
+                <div class="member-header">
+                    <div class="member-avatar">E</div>
+                    <div class="member-info">
+                        <h3>Emma Davis</h3>
+                        <div class="member-role">DevOps Engineer</div>
+                    </div>
+                </div>
+                <div class="member-tasks">
+                    <div class="task-assigned">
+                        <span class="task-name">Data Migration</span>
+                        <span class="task-status status-in-progress">In Progress</span>
+                    </div>
+                    <button class="add-task-btn" onclick="assignTask('Emma')">+ Assign Task</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalMemberName"></h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalMemberTasks"></div>
+        </div>
+    </div>
+
+    <div id="assignModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Assign Task</h2>
+                <button class="close-btn" onclick="closeAssignModal()">×</button>
+            </div>
+            <div class="form-group">
+                <label for="taskSelect">Select Task</label>
+                <select id="taskSelect">
+                    <option value="">Choose task...</option>
+                    <option value="launch">Launch Web Platform</option>
+                    <option value="backend">Backend API</option>
+                    <option value="frontend">Frontend UI</option>
+                    <option value="database">Database Setup</option>
+                    <option value="auth">User Authentication</option>
+                    <option value="api">API Endpoints</option>
+                    <option value="components">UI Components</option>
+                    <option value="dashboard">Dashboard</option>
+                    <option value="schema">Database Schema</option>
+                    <option value="migration">Data Migration</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button class="btn-secondary" onclick="closeAssignModal()">Cancel</button>
+                <button class="btn-primary" onclick="confirmAssignment()">Assign</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMember = '';
+
+        function showMemberModal(memberName) {
+            document.getElementById('modalMemberName').textContent = memberName + "'s Tasks";
+            const tasks = getMemberTasks(memberName);
+            document.getElementById('modalMemberTasks').innerHTML = tasks;
+            document.getElementById('memberModal').style.display = 'flex';
+        }
+
+        function getMemberTasks(memberName) {
+            const tasks = {
+                'Alex': ['User Authentication (Completed)', 'API Endpoints (In Progress)', 'Backend API (In Progress)'],
+                'Sarah': ['UI Components (Completed)', 'Dashboard (In Progress)', 'Frontend UI (In Progress)'],
+                'David': ['Database Schema (Completed)', 'Database Setup (Completed)'],
+                'Maria': ['Testing API (In Progress)', 'QA Testing (Todo)'],
+                'Mike': ['Design System (Completed)', 'UI Mockups (Completed)'],
+                'Emma': ['Data Migration (In Progress)', 'Deployment Setup (Todo)']
+            };
+
+            let html = '<div class="member-tasks">';
+            tasks[memberName].forEach(task => {
+                html += `<div class="task-assigned">
+                    <span class="task-name">${task}</span>
+                </div>`;
+            });
+            html += `<button class="add-task-btn" onclick="assignTask('${memberName}')">+ Assign New Task</button>`;
+            html += '</div>';
+            return html;
+        }
+
+        function closeModal() {
+            document.getElementById('memberModal').style.display = 'none';
+        }
+
+        function assignTask(memberName) {
+            currentMember = memberName;
+            document.getElementById('assignModal').style.display = 'flex';
+        }
+
+        function closeAssignModal() {
+            document.getElementById('assignModal').style.display = 'none';
+        }
+
+        function confirmAssignment() {
+            const taskSelect = document.getElementById('taskSelect');
+            if (taskSelect.value) {
+                alert(`Task "${taskSelect.options[taskSelect.selectedIndex].text}" assigned to ${currentMember}`);
+                closeAssignModal();
+            }
+        }
+
+        window.onclick = function (event) {
+            if (event.target.className === 'modal') {
+                closeModal();
+                closeAssignModal();
+            }
+        }
+    </script>
+</body>
+
+</html>
