@@ -41,16 +41,16 @@ async function loadUser() {
 
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+// document.addEventListener("DOMContentLoaded", async () => {
 
-    if (!window.location.pathname.includes("login")
-        && !window.location.pathname.includes("registration")) {
+//     if (!window.location.pathname.includes("login")
+//         && !window.location.pathname.includes("registration")) {
 
-        const user = await loadUser();
+//         const user = await loadUser();
 
-        if (!user) {
-            window.location.href = "/login/index.html";
-            return;
-        }
-    }
-});
+//         if (!user) {
+//             window.location.href = "/login/index.html";
+//             return;
+//         }
+//     }
+// });
