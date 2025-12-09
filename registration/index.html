@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
+    <script src="reg.js" defer></script>
 </head>
 
 <body>
     <video src="../media/ghoul.mp4" id="background" muted loop autoplay></video>
-    
+
     <div class="glass-card">
         <h1>REGISTER</h1>
-        
-       <form id="loginForm" method="POST" action="/register">
+
+        <form id="loginForm" method="POST">
             <div class="input-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <input type="email" id="username" name="username" placeholder="Enter your username" required>
             </div>
-            
+
             <div class="input-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
-            
+
             <button type="submit" class="login-btn">SIGN UP</button>
         </form>
 
         <div class="divider">
             <span>OR</span>
         </div>
-        
+
         <a href="../login/index.html" class="register-btn">LOG IN</a>
     </div>
 
 </body>
+
 </html>

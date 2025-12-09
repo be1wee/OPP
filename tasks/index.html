@@ -1,155 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Task</title>
-    <style>
-        @font-face {
-            font-family: "cygre";
-            src: url(/fonts/Cygre-Regular.ttf);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "cygre", sans-serif;
-        }
-        
-        body {
-            background: #0a0a0a;
-            color: white;
-            min-height: 100vh;
-        }
-        
-        .project-header {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-        }
-        
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .back-btn {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
-        
-        .project-info h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-        
-        .workspace {
-            padding: 30px;
-            height: calc(100vh - 80px);
-            overflow: auto;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-        
-        .form-container {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 30px;
-            width: 100%;
-            max-width: 600px;
-        }
-        
-        .form-title {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            color: white;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #333;
-            border-radius: 6px;
-            background: #0a0a0a;
-            color: white;
-            font-size: 0.9rem;
-        }
-        
-        .form-group textarea {
-            height: 100px;
-            resize: vertical;
-        }
-        
-        .form-row {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .form-row .form-group {
-            flex: 1;
-        }
-        
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .btn-primary {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            background: #667eea;
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
-        .btn-secondary {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #333;
-            border-radius: 6px;
-            background: transparent;
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header class="project-header">
         <div class="header-left">
-            <a href="../project/index.html" class="back-btn">←</a>
+            <a href="../project/project.html" class="back-btn">←</a>
             <div class="project-info">
                 <h1>Create New Task</h1>
                 <div class="project-id">#PRJ-4892</div>
             </div>
         </div>
     </header>
-    
+
     <main class="workspace">
         <div class="form-container">
             <h2 class="form-title">Task Details</h2>
@@ -158,12 +27,13 @@
                     <label for="taskTitle">Task Title</label>
                     <input type="text" id="taskTitle" name="taskTitle" placeholder="Enter task title" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="taskDescription">Description</label>
-                    <textarea id="taskDescription" name="taskDescription" placeholder="Describe the task details"></textarea>
+                    <textarea id="taskDescription" name="taskDescription"
+                        placeholder="Describe the task details"></textarea>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="parentTask">Parent Task</label>
@@ -177,7 +47,7 @@
                             <option value="api">API Endpoints</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="assignee">Assignee</label>
                         <select id="assignee" name="assignee">
@@ -191,13 +61,13 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="deadline">Deadline</label>
                         <input type="date" id="deadline" name="deadline">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="priority">Priority</label>
                         <select id="priority" name="priority">
@@ -208,7 +78,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select id="status" name="status">
@@ -218,9 +88,10 @@
                         <option value="completed">Completed</option>
                     </select>
                 </div>
-                
+
                 <div class="form-actions">
-                    <button type="button" class="btn-secondary" onclick="window.location.href='project.html'">Cancel</button>
+                    <button type="button" class="btn-secondary"
+                        onclick="window.location.href='../project/project.html'">Cancel</button>
                     <button type="submit" class="btn-primary">Create Task</button>
                 </div>
             </form>
@@ -228,9 +99,9 @@
     </main>
 
     <script>
-        document.getElementById('createTaskForm').addEventListener('submit', function(e) {
+        document.getElementById('createTaskForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const taskData = {
                 title: document.getElementById('taskTitle').value,
                 description: document.getElementById('taskDescription').value,
@@ -240,13 +111,14 @@
                 priority: document.getElementById('priority').value,
                 status: document.getElementById('status').value
             };
-            
+
             console.log('Creating task:', taskData);
             alert('Task created successfully!');
             window.location.href = 'project.html';
         });
-        
+
         document.getElementById('deadline').valueAsDate = new Date();
     </script>
 </body>
+
 </html>

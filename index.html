@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAIN</title>
     <link rel="stylesheet" href="main/main.css">
+    <script src="main/api.js" defer></script>
 </head>
+
 <body>
     <div class="liquid-bg"></div>
     <div class="background-pattern"></div>
-    
+
     <header>
         <nav id="project-control-panel">
             <a href="join_to_project/index.html" class="nav-btn">Join Project</a>
@@ -21,7 +24,7 @@
             <button class="logout-btn" onclick="logout()">🚪</button>
         </div>
     </header>
-    
+
     <main>
         <div class="list-project">
             <div class="project">
@@ -72,7 +75,7 @@
             margin-left: 10px;
             transition: all 0.3s ease;
         }
-        
+
         .logout-btn:hover {
             background: rgba(252, 129, 129, 0.3);
             transform: rotate(90deg);
@@ -87,4 +90,5 @@
         }
     </script>
 </body>
+
 </html>
