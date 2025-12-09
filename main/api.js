@@ -12,12 +12,13 @@ async function api(path, method = "GET", body = null) {
             "Content-Type": "application/json"
         }
     };
-
+    console.log("XXX")
     if (body) options.body = JSON.stringify(body);
 
     const res = await fetch(API + path, options);
 
     if (res.status === 401) {
+        
         window.location.href = "/login/index.html";
         return;
     }
@@ -32,10 +33,11 @@ async function api(path, method = "GET", body = null) {
 //  LOAD CURRENT USER (/me)
 // ==============================
 async function loadUser() {
+    console.log("HUIHUIHUI")
     try {
-        const data = await api("/me", "GET");
+        const data = await api("/api/me", "GET");
 
-        if (!data || !data.username) {
+        if (!data || (!data.username && !data.email)) {
             window.location.href = "/login/index.html";
             return;
         }
@@ -66,45 +68,6 @@ async function logout() {
         alert("Logout failed");
     }
 }
-
-
-// ==============================
-//   REGISTER USER (/api/register)
-// ==============================
-async function registerUser(username, password) {
-    try {
-        const response = await fetch(API + "/api/gyfytgt", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        });
-
-        if (!response.ok) {
-            const text = await response.text();
-            alert("Registration failed: " + text);
-            return null;
-        }
-
-        const data = await response.json();
-        console.log("Registered:", data);
-
-        // после регистрации НУЖНО залогиниться вручную
-        return data;
-    }
-    catch (err) {
-        console.error("Register error:", err);
-        alert("Registration failed (network error)");
-        return null;
-    }
-}
-
-
 
 
 // ==============================
