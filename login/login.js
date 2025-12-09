@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!Email || !Password) return alert("Fill all fields");
 
         try {
+            console.log("fefe")
             const response = await fetch(API + "/api/login", {
                 method: "POST",
                 credentials: "include",
@@ -23,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             window.location.href = "/index.html";
-            // loadUser();
 
         } catch (err) {
             console.error(err);

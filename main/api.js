@@ -33,10 +33,24 @@ async function loadUser() {
     console.log("DATA FROM /api/me:", data);
     const userElem = document.getElementById("username");
     if (userElem) {
-        userElem.textContent = "Unknown";
+        userElem.textContent = data.email;
         console.log("SET to Unknown");
     }
 
     return data;
 
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    if (!window.location.pathname.includes("login")
+        && !window.location.pathname.includes("registration")) {
+
+        const user = await loadUser();
+
+        if (!user) {
+            window.location.href = "/login/index.html";
+            return;
+        }
+    }
+});
