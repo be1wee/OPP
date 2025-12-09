@@ -1,10 +1,10 @@
-
 const API = "http://localhost:5164";
 
-// ==============================
-//  UNIVERSAL API WRAPPER
-// ==============================
+// ===================================
+// UNIVERSAL API WRAPPER
+// ===================================
 async function api(path, method = "GET", body = null) {
+    console.log("X")
     const options = {
         method,
         credentials: "include",
@@ -12,147 +12,31 @@ async function api(path, method = "GET", body = null) {
             "Content-Type": "application/json"
         }
     };
-    console.log("XXX")
-    if (body) options.body = JSON.stringify(body);
-
+    console.log("Y")
+    if (body) {
+        options.body = JSON.stringify(body);
+    }
+    console.log("Z")
     const res = await fetch(API + path, options);
 
-    if (res.status === 401) {
-        
-        window.location.href = "/login/index.html";
-        return;
-    }
 
     return await res.json();
 }
 
 
-
-
-// ==============================
-//  LOAD CURRENT USER (/me)
-// ==============================
+// ===================================
+// LOAD CURRENT USER (/api/me)
+// ===================================
 async function loadUser() {
-    console.log("HUIHUIHUI")
-    try {
-        const data = await api("/api/me", "GET");
-
-        if (!data || (!data.username && !data.email)) {
-            window.location.href = "/login/index.html";
-            return;
-        }
-
-        const userElem = document.getElementById("username");
-        if (userElem) userElem.textContent = data.username;
-
-        return data;
+    console.log("LOAD USER CALLED");
+    const data = await api("/api/me", "GET");
+    console.log("DATA FROM /api/me:", data);
+    const userElem = document.getElementById("username");
+    if (userElem) {
+        userElem.textContent = "Unknown";
+        console.log("SET to Unknown");
     }
-    catch (e) {
-        console.error("loadUser error:", e);
-        window.location.href = "/login/index.html";
-    }
+
+    return data;
+
 }
-
-
-
-// ==============================
-//  LOGOUT (/logout)
-// ==============================
-async function logout() {
-    try {
-        await api("/logout", "POST");
-        window.location.href = "/login/index.html";
-    }
-    catch (err) {
-        console.error("Logout error:", err);
-        alert("Logout failed");
-    }
-}
-
-
-// ==============================
-//   LOAD PROJECT LIST (/project/all)
-// ==============================
-
-async function loadProjects() {
-    try {
-        const data = await api("/project/all");
-
-        const container = document.querySelector(".list-project");
-        if (!container) return;
-
-        container.innerHTML = ""; 
-
-        data.forEach(project => {
-            const element = document.createElement("div");
-            element.classList.add("project");
-            element.innerHTML = `
-                <img src="media/hits.png" class="project-icon">
-                <p class="project-name project-text">${project.name}</p>
-                <p class="project-id project-text">#${project.projectId}</p>
-            `;
-            element.onclick = () => {
-                window.location.href = "/project/index.html?id=" + project.projectId;
-            };
-            container.appendChild(element);
-        });
-
-    } catch (err) {
-        console.error("Project load error:", err);
-    }
-}
-
-
-
-// ==============================
-//   LOAD TASKS FOR PROJECT (/project/{id}/tasks)
-// ==============================
-
-async function loadTasks(projectId) {
-    return await api(`/project/${projectId}/tasks`, "GET");
-}
-
-
-
-// ==============================
-//   CREATE PROJECT (/project/create)
-// ==============================
-
-async function createProject(name, subject) {
-    return await api("/project/create", "POST", { name, subject });
-}
-
-
-
-// ==============================
-//   JOIN PROJECT (/project/{id}/members/add)
-// ==============================
-
-async function joinProject(projectId) {
-    return await api(`/project/${projectId}/members/add`, "POST");
-}
-
-
-
-// ==============================
-//   PAGE AUTOLOAD HANDLER
-// ==============================
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-
-    if (!window.location.pathname.includes("login") &&
-        !window.location.pathname.includes("registration")) {
-
-        await loadUser(); 
-    }
-
-
-    if (window.location.pathname.endsWith("index.html") ||
-        window.location.pathname === "/") {
-
-        if (document.querySelector(".list-project")) {
-            await loadProjects();
-        }
-    }
-});
