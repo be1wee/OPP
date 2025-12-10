@@ -27,7 +27,7 @@ async function loadProjects() {
         document.querySelectorAll(".project").forEach(el => {
             el.addEventListener("click", () => {
                 const id = el.getAttribute("data-id");
-                window.location.href = `/project/?id=${id}`;
+                window.location.href = `/project/project.html?id=${id}`;
             });
         });
 
