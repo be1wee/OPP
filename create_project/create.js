@@ -8,9 +8,9 @@ document.getElementById("projectForm").addEventListener("submit", async (e) => {
         const response = await axios.post(
             "http://localhost:5164/api/me/projects",
             {
-                name,
-                subject,
-                description: null
+                Name: name,
+                Subject: subject,
+                Deadline: "2023-10-05T14:30:00.1234567Z"
             },
             {
                 withCredentials: true
