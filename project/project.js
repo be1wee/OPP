@@ -70,9 +70,8 @@ async function loadProject() {
     });
 
     const project = res.data;
-
-    document.querySelector(".project-info h1").textContent = project.name;
-    document.querySelector(".project-id").textContent = "#" + project.id;
+    document.querySelector(".project-info h1").textContent = project.Name;
+    document.querySelector(".project-id").textContent = "#" + project.Id;
 }
 
 async function loadTasks() {
