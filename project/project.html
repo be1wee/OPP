@@ -6,190 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Graph</title>
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="project.js" defer></script>
 </head>
 
 <body>
     <header class="project-header">
         <div class="project-info">
-            <h1>Web Platform Development</h1>
-            <div class="project-id">#PRJ-4892</div>
+            <h1></h1>
+            <div class="project-id"></div>
         </div>
         <div class="header-controls">
-            <a href="../members/index.html"class="header-btn">Members</a>
-            <a href="../tasks/index.html"class="header-btn">Create Task</a>
-            <a href="../edit_project/index.html"class="header-btn">Edit Project</a>
+            <a id="members-link" class="header-btn">Members</a>
+            <a id="tasks-link" class="header-btn">Create Task</a>
+            <a id="edit-link" class="header-btn">Edit Project</a>
         </div>
     </header>
 
     <main class="workspace">
-        <div class="task-list">
-            <!-- <div class="task-item main">
-                <div class="task-header">
-                    <div class="task-title">Launch Web Platform
-                        <span class="expand-btn" onclick="toggleChildren(this)">▼</span>
-                    </div>
-                    <div class="task-meta">
-                        <div class="meta-tag deadline">Dec 30, 2024</div>
-                        <div class="meta-tag assignee">Team Lead</div>
-                        <div class="meta-tag status-in-progress">IN PROGRESS</div>
-                    </div>
-                </div>
-                <div class="task-description">Deploy and launch complete web application to production</div>
-
-                <div class="children">
-                    <div class="task-item child">
-                        <div class="task-header">
-                            <div class="task-title">Backend API
-                                <span class="expand-btn" onclick="toggleChildren(this)">▼</span>
-                            </div>
-                            <div class="task-meta">
-                                <div class="meta-tag deadline">Dec 15, 2024</div>
-                                <div class="meta-tag assignee">Alex</div>
-                                <div class="meta-tag status-in-progress">IN PROGRESS</div>
-                            </div>
-                        </div>
-                        <div class="task-description">Develop server-side functionality and REST API</div>
-
-                        <div class="children">
-                            <div class="task-item grandchild">
-                                <div class="task-header">
-                                    <div class="task-title">User Authentication</div>
-                                    <div class="task-meta">
-                                        <div class="meta-tag deadline">Nov 30, 2024</div>
-                                        <div class="meta-tag assignee">Maria</div>
-                                        <div class="meta-tag status-completed">COMPLETED</div>
-                                    </div>
-                                </div>
-                                <div class="task-description">Implement login/register system with JWT</div>
-                            </div>
-                            <div class="task-item grandchild">
-                                <div class="task-header">
-                                    <div class="task-title">API Endpoints</div>
-                                    <div class="task-meta">
-                                        <div class="meta-tag deadline">Dec 10, 2024</div>
-                                        <div class="meta-tag assignee">John</div>
-                                        <div class="meta-tag status-review">REVIEW</div>
-                                    </div>
-                                </div>
-                                <div class="task-description">Develop REST API endpoints for user management</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="task-item child">
-                        <div class="task-header">
-                            <div class="task-title">Frontend UI
-                                <span class="expand-btn" onclick="toggleChildren(this)">▼</span>
-                            </div>
-                            <div class="task-meta">
-                                <div class="meta-tag deadline">Dec 20, 2024</div>
-                                <div class="meta-tag assignee">Sarah</div>
-                                <div class="meta-tag status-in-progress">IN PROGRESS</div>
-                            </div>
-                        </div>
-                        <div class="task-description">Build responsive user interface with React</div>
-
-                        <div class="children">
-                            <div class="task-item grandchild">
-                                <div class="task-header">
-                                    <div class="task-title">UI Components</div>
-                                    <div class="task-meta">
-                                        <div class="meta-tag deadline">Dec 5, 2024</div>
-                                        <div class="meta-tag assignee">Mike</div>
-                                        <div class="meta-tag status-completed">COMPLETED</div>
-                                    </div>
-                                </div>
-                                <div class="task-description">Create reusable React component library</div>
-                            </div>
-                            <div class="task-item grandchild">
-                                <div class="task-header">
-                                    <div class="task-title">Dashboard</div>
-                                    <div class="task-meta">
-                                        <div class="meta-tag deadline">Dec 18, 2024</div>
-                                        <div class="meta-tag assignee">Sarah</div>
-                                        <div class="meta-tag status-todo">TODO</div>
-                                    </div>
-                                </div>
-                                <div class="task-description">Build main user dashboard with analytics</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="task-item child">
-                        <div class="task-header">
-                            <div class="task-title">Database
-                                <span class="expand-btn" onclick="toggleChildren(this)">▼</span>
-                            </div>
-                            <div class="task-meta">
-                                <div class="meta-tag deadline">Dec 12, 2024</div>
-                                <div class="meta-tag assignee">David</div>
-                                <div class="meta-tag status-completed">COMPLETED</div>
-                            </div>
-                        </div>
-                        <div class="task-description">Setup and configure PostgreSQL database</div>
-
-                        <div class="children">
-                            <div class="task-item grandchild">
-                                <div class="task-header">
-                                    <div class="task-title">Database Schema</div>
-                                    <div class="task-meta">
-                                        <div class="meta-tag deadline">Nov 25, 2024</div>
-                                        <div class="meta-tag assignee">David</div>
-                                        <div class="meta-tag status-completed">COMPLETED</div>
-                                    </div>
-                                </div>
-                                <div class="task-description">Design and implement database structure</div>
-                            </div>
-                            <div class="task-item grandchild">
-                                <div class="task-header">
-                                    <div class="task-title">Data Migration</div>
-                                    <div class="task-meta">
-                                        <div class="meta-tag deadline">Dec 8, 2024</div>
-                                        <div class="meta-tag assignee">Emma</div>
-                                        <div class="meta-tag status-in-progress">IN PROGRESS</div>
-                                    </div>
-                                </div>
-                                <div class="task-description">Create data migration and seeding scripts</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        </div>
+        <div class="task-list" id="task-listID"></div>
     </main>
-    
-    <script>
-        function toggleChildren(btn) {
-            const taskItem = btn.parentElement.parentElement.parentElement;
-            const children = taskItem.querySelector('.children');
-            if (children) {
-                children.classList.toggle('hidden');
-                btn.textContent = children.classList.contains('hidden') ? '►' : '▼';
-            }
-        }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.children').forEach(children => {
-                children.classList.remove('hidden');
-            });
-            document.querySelectorAll('.expand-btn').forEach(btn => {
-                btn.textContent = '▼';
-            });
-        });
-    </script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const id = new URLSearchParams(window.location.search).get("id");
             if (!id) return;
 
-            document.querySelector("a[href='../members/index.html']").href = `../members/index.html?id=${id}`;
-            document.querySelector("a[href='../tasks/index.html']").href = `../tasks/index.html?id=${id}`;
-            document.querySelector("a[href='../edit_project/index.html']").href = `../edit_project/index.html?id=${id}`;
+            document.getElementById("members-link").href = `../members/index.html?id=${id}`;
+            document.getElementById("tasks-link").href = `../tasks/index.html?id=${id}`;
+            document.getElementById("edit-link").href = `../edit_project/index.html?id=${id}`;
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="project.js"></script>
 </body>
 
 </html>

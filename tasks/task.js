@@ -15,7 +15,7 @@ document.getElementById('createTaskForm').addEventListener('submit', async funct
         },{
             withCredentials: true
         });
-        window.location.href = `/project/?id=${projectId}`;
+        window.location.href = `/project/project.html?id=${projectId}`;
     } catch (err) {
         console.log(err)
         console.error(err);
