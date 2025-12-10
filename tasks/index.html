@@ -14,7 +14,7 @@
             <a href="../project/project.html" class="back-btn">←</a>
             <div class="project-info">
                 <h1>Create New Task</h1>
-                <div class="project-id">#PRJ-4892</div>
+                <div class="project-id"></div>
             </div>
         </div>
     </header>
@@ -98,7 +98,7 @@
         </div>
     </main>
 
-    <script>
+    <!-- <script>
         document.getElementById('createTaskForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -114,11 +114,12 @@
 
             console.log('Creating task:', taskData);
             alert('Task created successfully!');
-            window.location.href = 'project.html';
         });
 
         document.getElementById('deadline').valueAsDate = new Date();
-    </script>
+    </script> -->
+    <script src="task.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

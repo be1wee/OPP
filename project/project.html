@@ -177,6 +177,17 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const id = new URLSearchParams(window.location.search).get("id");
+            if (!id) return;
+
+            document.querySelector("a[href='../members/index.html']").href = `../members/index.html?id=${id}`;
+            document.querySelector("a[href='../tasks/index.html']").href = `../tasks/index.html?id=${id}`;
+            document.querySelector("a[href='../edit_project/index.html']").href = `../edit_project/index.html?id=${id}`;
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="project.js"></script>
 </body>
