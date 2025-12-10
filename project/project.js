@@ -70,7 +70,7 @@ function renderTasks(tasks) {
                 </div>
                 <div class="task-meta">
                     <div class="meta-tag deadline">${task.deadline?.substring(0, 10) ?? ""}</div>
-                    <div class="meta-tag status-${task.status?.toLowerCase() ?? "none"}">${task.status}</div>
+                    <div class="meta-tag status-${String(task.status).toLowerCase()}">${task.status}</div>
                 </div>
             </div>
 
