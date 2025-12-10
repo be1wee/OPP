@@ -130,7 +130,7 @@ header {
     padding-top: 100px;
     padding-bottom: 50px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
     gap: 2vw;
     width: 100%;
@@ -194,7 +194,7 @@ header {
     }
     
     .project {
-        flex-direction: column;
+        flex-direction:column;
         gap: 15px;
         text-align: center;
         padding: 20px;

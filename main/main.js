@@ -17,12 +17,18 @@ async function loadProjects() {
 
         projects.forEach(p => {
             list.innerHTML += `
-                <div class="project">
+                <div class="project" data-id="${p.id}">
                     <img src="media/hits.png" class="project-icon">
                     <p class="project-name project-text">${p.name}</p>
                     <p class="project-id project-text">#${p.id}</p>
                 </div>
             `;
+        });
+        document.querySelectorAll(".project").forEach(el => {
+            el.addEventListener("click", () => {
+                const id = el.getAttribute("data-id");
+                window.location.href = `/project/?id=${id}`;
+            });
         });
 
     } catch (err) {
