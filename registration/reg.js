@@ -1,62 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-    const form = document.getElementById("loginForm");
-    const emailInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    try {
+        const response = await axios.post("http://localhost:5164/api/register", {
+            email: email,
+            password: password
+        });
 
-        const Email = emailInput.value.trim();
-        const Password = passwordInput.value.trim();
+        console.log("Ответ сервера:", response.data);
 
-        // === FRONTEND VALIDATION ===
-        if (!Email) {
-            alert("Email cannot be empty");
-            return;
+        alert("Регистрация прошла успешно!");
+
+        window.location.href = "../login/index.html";
+
+    } catch (error) {
+        const status = error.response.status;
+        if (status === 409) {
+            alert("Пользователь с таким email уже зарегистрирован!");
         }
-
-        if (!Password) {
-            alert("Password cannot be empty");
-            return;
+        else if (error.response) {
+            alert("Ошибка: " + error.response.data.message);
+        } else {
+            alert("Не удалось отправить запрос.");
         }
-
-        try {
-            const response = await fetch(API + "/api/register", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    Email: Email,
-                    Password: Password
-                })
-            });
-
-            if (response.status === 409) {
-                alert("User already exists");
-                return;
-            }
-
-            if (response.status === 400) {
-                const message = await response.text();
-                alert("Registration error: " + message);
-                return;
-            }
-
-            if (!response.ok) {
-                alert("Registration failed (" + response.status + ")");
-                return;
-            }
-
-            alert("Registration successful! Now log in.");
-            window.location.href = "../login/index.html";
-
-        } catch (err) {
-            console.error(err);
-            alert("Network error. Try again later.");
-        }
-    });
-
+        console.error("Ошибка регистрации:", error);
+    }
 });
