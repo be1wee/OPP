@@ -1,66 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Graph</title>
+    <title>Project</title>
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="project.js" defer></script>
+    <style>
+        .task-click-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .task-header, .task-title, .task-meta, .expand-btn, .task-description {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .task-item {
+            position: relative;
+        }
+        
+        .expand-btn {
+            z-index: 3;
+            pointer-events: auto;
+        }
+        
+        .task-header {
+            pointer-events: none;
+        }
+        
+        .task-header > * {
+            pointer-events: auto;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="liquid-bg"></div>
+    <div class="animated-grid"></div>
+    
     <header class="project-header">
-        <div class="project-info">
-            <h1></h1>
-            <div class="project-id"></div>
+        <div class="project-header-content">
+            <div class="project-title-section">
+                <div class="project-icon">📋</div>
+                <div>
+                    <h1 id="projectName">Loading...</h1>
+                    <div class="project-subject" id="projectSubject"></div>
+                </div>
+            </div>
+            <div class="project-actions">
+                <button class="action-btn primary" onclick="createTask()">+ New Task</button>
+                <button class="action-btn" onclick="showMembers()">👥 Members</button>
+                <button class="action-btn" onclick="editProject()">⚙️ Settings(INDEV)</button>
+            </div>
         </div>
-        <div class="header-controls">
-            <!-- <a id="members-link" class="header-btn">Members</a> -->
-            <a id="tasks-link" class="header-btn">Create Task</a>
-            <!-- <a id="edit-link" class="header-btn">Edit Project</a> -->
+        
+        <div class="project-stats">
+            <div class="stat-item">
+                <span class="stat-label">ID:</span>
+                <span class="stat-value" id="projectId"></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Status:</span>
+                <span class="stat-value" id="projectStatus"></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Deadline:</span>
+                <span class="stat-value" id="projectDeadline"></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Tasks:</span>
+                <span class="stat-value" id="taskCount">0</span>
+            </div>
         </div>
     </header>
 
-    <main class="workspace">
-        <div class="task-list" id="task-listID"></div>
+    <main class="project-main">
+        <div class="project-content">
+            <div class="tasks-section">
+                <div class="tasks-header">
+                    <h2>Project Tasks</h2>
+                </div>
+                <div class="tasks-container" id="tasksContainer">
+                    <div class="task-list" id="taskList"></div>
+                </div>
+            </div>
+        </div>
     </main>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const id = new URLSearchParams(window.location.search).get("id");
-        if (!id) {
-            console.error("No project ID in URL");
-            return;
-        }
-        
-        console.log("Project ID:", id); // Для отладки
-        
-        // Проверяем, что элементы существуют
-        const tasksLink = document.getElementById("tasks-link");
-        if (tasksLink) {
-            tasksLink.href = `../tasks/index.html?id=${id}`;
-            console.log("Tasks link set to:", tasksLink.href);
-        } else {
-            console.error("Element with id 'tasks-link' not found");
-        }
-        
-        // Аналогично для других ссылок (раскомментируйте если нужно)
-        /*
-        const membersLink = document.getElementById("members-link");
-        if (membersLink) {
-            membersLink.href = `../members/index.html?id=${id}`;
-        }
-        
-        const editLink = document.getElementById("edit-link");
-        if (editLink) {
-            editLink.href = `../edit_project/index.html?id=${id}`;
-        }
-        */
-    });
-</script>
 
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const projectId = params.get("id");
+        let allTasks = [];
+
+        if (!projectId) {
+            alert("Project ID missing");
+            window.location.href = "/";
+        }
+
+        async function loadProject() {
+            try {
+                const token = localStorage.getItem('auth_token');
+                const response = await axios.get(`http://localhost:8000/api/projects/${projectId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const project = response.data.data;
+
+                document.getElementById('projectName').textContent = project.name;
+                document.getElementById('projectSubject').textContent = project.subject;
+                document.getElementById('projectId').textContent = project.id.substring(0, 8);
+                document.getElementById('projectStatus').textContent = getProjectStatusText(project.action_status);
+
+                const deadline = new Date(project.deadline).toLocaleDateString();
+                document.getElementById('projectDeadline').textContent = deadline;
+
+            } catch (error) {
+                console.error("Error loading project:", error);
+                if (error.response?.status === 401) {
+                    window.location.href = '/login/';
+                }
+            }
+        }
+
+        async function loadTasks() {
+            try {
+                const token = localStorage.getItem('auth_token');
+                const response = await axios.get(`http://localhost:8000/api/projects/${projectId}/tasks`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                allTasks = response.data.data || [];
+                document.getElementById('taskCount').textContent = allTasks.length;
+                renderTasks(allTasks);
+
+            } catch (error) {
+                console.error("Error loading tasks:", error);
+                if (error.response?.status === 401) {
+                    window.location.href = '/login/';
+                }
+            }
+        }
+
+        function renderTasks(tasks) {
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+
+            if (!tasks || tasks.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-tasks">
+                        <div class="empty-icon">📋</div>
+                        <h3>No tasks yet</h3>
+                        <p>Create your first task to get started</p>
+                        <button class="action-btn primary" onclick="createTask()">+ Create First Task</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const childrenByParent = {};
+            tasks.forEach(task => {
+                const parentId = task.parent_task_id || 'root';
+                if (!childrenByParent[parentId]) {
+                    childrenByParent[parentId] = [];
+                }
+                childrenByParent[parentId].push(task);
+            });
+
+            function renderTask(task, level = 0) {
+                const taskElement = document.createElement('div');
+                taskElement.className = `task-item ${level === 0 ? 'main' : level === 1 ? 'child' : 'grandchild'}`;
+                taskElement.dataset.id = task.id;
+
+                const deadline = task.deadline ? new Date(task.deadline).toLocaleDateString() : 'No deadline';
+                const hasChildren = childrenByParent[task.id] && childrenByParent[task.id].length > 0;
+
+                const ownerEmail = task.owner?.email || 'Unassigned';
+                const isCurrentUser = task.owner?.email === localStorage.getItem('userEmail');
+                const ownerDisplay = isCurrentUser ? 'You' : ownerEmail;
+
+                taskElement.innerHTML = `
+                    <div class="task-click-area"></div>
+                    <div class="task-header">
+                        <div class="task-title">
+                            ${task.title}
+                            ${hasChildren ? `<span class="expand-btn">▼</span>` : ''}
+                        </div>
+                        <div class="task-meta">
+                            <div class="meta-tag assignee">${ownerDisplay}</div>
+                            <div class="meta-tag deadline">${deadline}</div>
+                            <div class="meta-tag status-${task.status}">${getTaskStatusText(task.status)}</div>
+                        </div>
+                    </div>
+                    ${task.description ? `<div class="task-description">${task.description}</div>` : ''}
+                    ${hasChildren ? `<div class="children"></div>` : ''}
+                `;
+
+                const clickArea = taskElement.querySelector('.task-click-area');
+                clickArea.addEventListener('click', () => {
+                    window.location.href = `/task/index.html?id=${task.id}&project=${projectId}`;
+                });
+
+                if (hasChildren) {
+                    const childrenContainer = taskElement.querySelector('.children');
+                    childrenByParent[task.id].forEach(childTask => {
+                        childrenContainer.appendChild(renderTask(childTask, level + 1));
+                    });
+
+                    const expandBtn = taskElement.querySelector('.expand-btn');
+                    expandBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        toggleChildren(expandBtn);
+                    });
+                }
+
+                return taskElement;
+            }
+
+            (childrenByParent['root'] || []).forEach(rootTask => {
+                list.appendChild(renderTask(rootTask, 0));
+            });
+        }
+
+        function getProjectStatusText(status) {
+            switch (status) {
+                case 0: return 'Waiting';
+                case 1: return 'In Progress';
+                case 2: return 'Completed';
+                default: return 'Unknown';
+            }
+        }
+
+        function getTaskStatusText(status) {
+            switch (status) {
+                case 0: return 'Waiting';
+                case 1: return 'In Progress';
+                case 2: return 'Completed';
+                default: return 'Unknown';
+            }
+        }
+
+        function toggleChildren(btn) {
+            const taskItem = btn.closest('.task-item');
+            const children = taskItem.querySelector('.children');
+            if (children) {
+                children.classList.toggle('hidden');
+                btn.textContent = children.classList.contains('hidden') ? '►' : '▼';
+            }
+        }
+
+        function createTask() {
+            window.location.href = `/tasks/index.html?project=${projectId}`;
+        }
+
+        function showMembers() {
+            window.location.href = `/members/index.html?id=${projectId}`;
+        }
+
+        function editProject() {
+            window.location.href = `/edit_project/index.html?id=${projectId}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadProject();
+            await loadTasks();
+        });
+    </script>
 </body>
-
 </html>

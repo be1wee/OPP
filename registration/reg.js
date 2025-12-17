@@ -1,17 +1,4 @@
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    const token = localStorage.getItem('auth_token');
-    const currentPage = window.location.pathname;
-
-    if (!token && !currentPage.includes('login') && !currentPage.includes('register')) {
-        window.location.href = '/login/';
-    }
-    if (token && (currentPage.includes('login') || currentPage.includes('register'))) {
-        window.location.href = '/';
-    }
-});
-
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 

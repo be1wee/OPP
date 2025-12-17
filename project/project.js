@@ -1,118 +1,180 @@
 const params = new URLSearchParams(window.location.search);
 const projectId = params.get("id");
+let allTasks = [];
 
 if (!projectId) {
     alert("Project ID missing");
+    window.location.href = "/";
 }
 
 async function loadProject() {
-    const res = await axios.get(`http://localhost:5164/api/project/${projectId}`, {
-        withCredentials: true
-    });
+    try {
+        const token = localStorage.getItem('auth_token');
+        const response = await axios.get(`http://localhost:8000/api/projects/${projectId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
-    const p = res.data;
+        const project = response.data.data;
 
-    document.querySelector(".project-info h1").textContent = p.Name;
-    document.querySelector(".project-id").textContent = "#" + p.Id;
+        document.getElementById('projectName').textContent = project.name;
+        document.getElementById('projectSubject').textContent = project.subject;
+        document.getElementById('projectId').textContent = project.id.substring(0, 8);
+        document.getElementById('projectStatus').textContent = getProjectStatusText(project.action_status);
+
+        const deadline = new Date(project.deadline).toLocaleDateString();
+        document.getElementById('projectDeadline').textContent = deadline;
+
+    } catch (error) {
+        console.error("Error loading project:", error);
+        if (error.response?.status === 401) {
+            window.location.href = '/login/';
+        }
+    }
 }
 
 async function loadTasks() {
-    const res = await axios.get(`http://localhost:5164/api/project/${projectId}/tasks`, {
-        withCredentials: true
-    });
+    try {
+        const token = localStorage.getItem('auth_token');
+        const response = await axios.get(`http://localhost:8000/api/projects/${projectId}/tasks`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
-    console.log("Tasks from backend:", res.data);
+        allTasks = response.data.data || [];
+        document.getElementById('taskCount').textContent = allTasks.length;
+        renderTasks(allTasks);
 
-    const tasks = res.data.map(t => ({
-        id: t.Id,
-        projectId: t.ProjectId,
-        parentTaskId: t.ParentTaskId ?? null,
-        ownerId: t.OwnerId,
-        title: t.Title,
-        description: t.Description,
-        status: t.Status,
-        deadline: t.Deadline,
-        subtasks: t.Subtasks
-    }));
-
-    renderTasks(tasks);
+    } catch (error) {
+        console.error("Error loading tasks:", error);
+        if (error.response?.status === 401) {
+            window.location.href = '/login/';
+        }
+    }
 }
 
 function renderTasks(tasks) {
-    console.log("Normalized tasks:", tasks);
+    const list = document.getElementById('taskList');
+    list.innerHTML = '';
 
-    const list = document.getElementById("task-listID");
-    list.innerHTML = "";
+    if (!tasks || tasks.length === 0) {
+        list.innerHTML = `
+            <div class="empty-tasks">
+                <div class="empty-icon">📋</div>
+                <h3>No tasks yet</h3>
+                <p>Create your first task to get started</p>
+                <button class="action-btn primary" onclick="createTask()">+ Create First Task</button>
+            </div>
+        `;
+        return;
+    }
 
-    const map = {};
-
-    tasks.forEach(t => {
-        const parent = t.parentTaskId ?? null;
-        if (!map[parent]) map[parent] = [];
-        map[parent].push(t);
+    const childrenByParent = {};
+    tasks.forEach(task => {
+        const parentId = task.parent_task_id || 'root';
+        if (!childrenByParent[parentId]) {
+            childrenByParent[parentId] = [];
+        }
+        childrenByParent[parentId].push(task);
     });
 
-    console.log("MAP:", map);
+    function renderTask(task, level = 0) {
+        const taskElement = document.createElement('div');
+        taskElement.className = `task-item ${level === 0 ? 'main' : level === 1 ? 'child' : 'grandchild'}`;
+        taskElement.dataset.id = task.id;
 
-    function makeTask(task, level) {
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("task-item");
+        const deadline = task.deadline ? new Date(task.deadline).toLocaleDateString() : 'No deadline';
+        const hasChildren = childrenByParent[task.id] && childrenByParent[task.id].length > 0;
 
-        if (level === 0) wrapper.classList.add("main");
-        if (level === 1) wrapper.classList.add("child");
-        if (level >= 2) wrapper.classList.add("grandchild");
+        const ownerEmail = task.owner?.email || 'Unassigned';
+        const isCurrentUser = task.owner?.email === localStorage.getItem('userEmail');
+        const ownerDisplay = isCurrentUser ? 'You' : ownerEmail;
 
-        wrapper.innerHTML = `
+        taskElement.innerHTML = `
             <div class="task-header">
                 <div class="task-title">
                     ${task.title}
-                    ${map[task.id] ? `<span class="expand-btn">▼</span>` : ""}
+                    ${hasChildren ? `<span class="expand-btn">▼</span>` : ''}
                 </div>
                 <div class="task-meta">
-                    <div class="meta-tag deadline">${task.deadline?.substring(0, 10) ?? ""}</div>
-                    <div class="meta-tag status-${String(task.status).toLowerCase()}">${task.status}</div>
+                    <div class="meta-tag assignee"> ${ownerDisplay}</div>
+                    <div class="meta-tag deadline"> ${deadline}</div>
+                    <div class="meta-tag status-${task.status}">${getTaskStatusText(task.status)}</div>
                 </div>
             </div>
-
-            <div class="task-description">
-                ${task.description ?? ""}
-            </div>
-
-            <div class="children"></div>
+            ${task.description ? `<div class="task-description">${task.description}</div>` : ''}
+            ${hasChildren ? `<div class="children"></div>` : ''}
         `;
 
-        const childrenContainer = wrapper.querySelector(".children");
-
-        if (map[task.id]) {
-            map[task.id].forEach(child => {
-                childrenContainer.appendChild(makeTask(child, level + 1));
+        if (hasChildren) {
+            const childrenContainer = taskElement.querySelector('.children');
+            childrenByParent[task.id].forEach(childTask => {
+                childrenContainer.appendChild(renderTask(childTask, level + 1));
             });
-        } else {
-            childrenContainer.remove();
+
+            const expandBtn = taskElement.querySelector('.expand-btn');
+            expandBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChildren(expandBtn);
+            });
         }
 
-        return wrapper;
+        taskElement.addEventListener('click', (e) => {
+            if (!e.target.closest('.expand-btn')) {
+                window.location.href = `/task/index.html?id=${task.id}&project=${projectId}`;
+            }
+        });
+
+        return taskElement;
     }
 
-    (map[null] || []).forEach(root => {
-        list.appendChild(makeTask(root, 0));
-    });
-
-    document.querySelectorAll(".expand-btn").forEach(btn => {
-        btn.onclick = () => toggleChildren(btn);
+    (childrenByParent['root'] || []).forEach(rootTask => {
+        list.appendChild(renderTask(rootTask, 0));
     });
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-    await loadProject();
-    await loadTasks();
-});
+function getProjectStatusText(status) {
+    switch (status) {
+        case 0: return 'Waiting';
+        case 1: return 'In Progress';
+        case 2: return 'Completed';
+        default: return 'Unknown';
+    }
+}
+
+function getTaskStatusText(status) {
+    switch (status) {
+        case 0: return 'Waiting';
+        case 1: return 'In Progress';
+        case 2: return 'Completed';
+        default: return 'Unknown';
+    }
+}
 
 function toggleChildren(btn) {
-    const taskItem = btn.closest(".task-item");
+    const taskItem = btn.closest('.task-item');
     const children = taskItem.querySelector('.children');
     if (children) {
         children.classList.toggle('hidden');
         btn.textContent = children.classList.contains('hidden') ? '►' : '▼';
     }
 }
+
+function createTask() {
+    window.location.href = `/tasks/index.html?project=${projectId}`;
+}
+
+function showMembers() {
+    window.location.href = `/members/index.html?id=${projectId}`;
+}
+
+function editProject() {
+    window.location.href = `/edit_project/index.html?id=${projectId}`;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadProject();
+    await loadTasks();
+});
