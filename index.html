@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="main/main.css">
     <script src="main/main.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <script src="api.js"></script>
 </head>
 
 <body>
     <div class="liquid-bg"></div>
+    <div class="animated-grid"></div>
     <div class="background-pattern"></div>
 
     <header>
@@ -54,8 +56,17 @@
     </style>
 
     <script>
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
+        async function logout() {
+            if (!confirm('Are you sure you want to logout?')) {
+                return;
+            }
+
+            try {
+                await api.post('/logout');
+            } catch (error) {
+            } finally {
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('userEmail');
                 window.location.href = '../login/index.html';
             }
         }

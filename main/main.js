@@ -1,3 +1,17 @@
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('auth_token');
+    const currentPage = window.location.pathname;
+    
+    if (!token && !currentPage.includes('login') && !currentPage.includes('register')) {
+        window.location.href = '/login/';
+    }
+    if (token && (currentPage.includes('login') || currentPage.includes('register'))) {
+        window.location.href = '/';
+    }
+});
+
 async function loadProjects() {
     try {
         const response = await axios.get("http://localhost:5164/api/me/projects", {
