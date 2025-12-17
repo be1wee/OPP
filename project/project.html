@@ -27,17 +27,39 @@
     <main class="workspace">
         <div class="task-list" id="task-listID"></div>
     </main>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const id = new URLSearchParams(window.location.search).get("id");
-            if (!id) return;
-
-            document.getElementById("members-link").href = `../members/index.html?id=${id}`;
-            document.getElementById("tasks-link").href = `../tasks/index.html?id=${id}`;
-            document.getElementById("edit-link").href = `../edit_project/index.html?id=${id}`;
-        });
-    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const id = new URLSearchParams(window.location.search).get("id");
+        if (!id) {
+            console.error("No project ID in URL");
+            return;
+        }
+        
+        console.log("Project ID:", id); // Для отладки
+        
+        // Проверяем, что элементы существуют
+        const tasksLink = document.getElementById("tasks-link");
+        if (tasksLink) {
+            tasksLink.href = `../tasks/index.html?id=${id}`;
+            console.log("Tasks link set to:", tasksLink.href);
+        } else {
+            console.error("Element with id 'tasks-link' not found");
+        }
+        
+        // Аналогично для других ссылок (раскомментируйте если нужно)
+        /*
+        const membersLink = document.getElementById("members-link");
+        if (membersLink) {
+            membersLink.href = `../members/index.html?id=${id}`;
+        }
+        
+        const editLink = document.getElementById("edit-link");
+        if (editLink) {
+            editLink.href = `../edit_project/index.html?id=${id}`;
+        }
+        */
+    });
+</script>
 
 </body>
 

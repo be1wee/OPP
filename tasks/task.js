@@ -23,10 +23,6 @@ document.getElementById('createTaskForm').addEventListener('submit', async funct
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadParentTasks();
-    document.getElementById('createTaskForm').addEventListener('submit', submitTask);
-});
 async function loadParentTasks() {
     const projectId = new URLSearchParams(location.search).get("id");
     const select = document.getElementById("parentTask");
