@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     document.getElementById('deadline').valueAsDate = tomorrow;
+    document.getElementById('backBtn').href = `/project/project.html?id=${projectId}`;
 });
 
 async function loadData(projectId) {
@@ -141,3 +142,4 @@ function setupForm(projectId) {
         }
     });
 }
+

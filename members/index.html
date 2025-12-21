@@ -1,23 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Members</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .change-role-btn {
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: var(--primary);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .change-role-btn:hover {
+            background: rgba(102, 126, 234, 0.25);
+        }
+
+        .role-select {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .role-select select {
+            width: 100%;
+            padding: 6px 10px;
+            background: rgba(30, 30, 40, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .role-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .save-role-btn {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 6px;
+            padding: 4px 12px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .cancel-role-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 12px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .members-back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            z-index: 100;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .members-back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .project-header-content {
+            padding-left: 120px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="liquid-bg"></div>
     <div class="animated-grid"></div>
-    
-    
+
+    <a href="#" id="backBtn" class="members-back-btn">←</a>
+
     <header class="project-header">
-        <div class="project-title-section">
-            <div class="project-icon">👥</div>
-            <div>
-                <h1 id="projectName">Project Members</h1>
-                <div class="project-id" id="projectId"></div>
+        <div class="project-header-content">
+            <div class="project-title-section">
+                <div class="project-icon">👥</div>
+                <div>
+                    <h1 id="projectName">Project Members</h1>
+                    <div class="project-id" id="projectId"></div>
+                </div>
             </div>
         </div>
     </header>
@@ -28,11 +114,11 @@
                 <h2>Team Members</h2>
                 <div class="members-count" id="membersCount">0 members</div>
             </div>
-            
+
             <div class="members-grid" id="membersGrid">
             </div>
         </div>
-        
+
         <div class="members-sidebar">
             <div class="sidebar-section">
                 <h3>Invite Members</h3>
@@ -45,7 +131,7 @@
                     <p class="invite-note">Share this ID with others to join the project</p>
                 </div>
             </div>
-            
+
             <div class="sidebar-section">
                 <h3>Your Role</h3>
                 <div class="role-info" id="userRoleInfo">
@@ -57,5 +143,7 @@
     </main>
 
     <script src="members.js"></script>
+    
 </body>
+
 </html>

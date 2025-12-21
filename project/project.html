@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,34 +16,39 @@
             height: 100%;
             z-index: 1;
         }
-        
-        .task-header, .task-title, .task-meta, .expand-btn, .task-description {
+
+        .task-header,
+        .task-title,
+        .task-meta,
+        .expand-btn,
+        .task-description {
             position: relative;
             z-index: 2;
         }
-        
+
         .task-item {
             position: relative;
         }
-        
+
         .expand-btn {
             z-index: 3;
             pointer-events: auto;
         }
-        
+
         .task-header {
             pointer-events: none;
         }
-        
-        .task-header > * {
+
+        .task-header>* {
             pointer-events: auto;
         }
     </style>
 </head>
+
 <body>
     <div class="liquid-bg"></div>
     <div class="animated-grid"></div>
-    
+
     <header class="project-header">
         <div class="project-header-content">
             <div class="project-title-section">
@@ -55,10 +61,11 @@
             <div class="project-actions">
                 <button class="action-btn primary" onclick="createTask()">+ New Task</button>
                 <button class="action-btn" onclick="showMembers()">👥 Members</button>
-                <button class="action-btn" onclick="editProject()">⚙️ Settings(INDEV)</button>
+                <button class="action-btn" onclick="editProject()">⚙️ Settings</button>
+                <button class="action-btn" onclick="backprof()">Back to profile -></button>
             </div>
         </div>
-        
+
         <div class="project-stats">
             <div class="stat-item">
                 <span class="stat-label">ID:</span>
@@ -270,10 +277,15 @@
             window.location.href = `/edit_project/index.html?id=${projectId}`;
         }
 
+        function backprof() {
+            window.location.href = `/`;
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             await loadProject();
             await loadTasks();
         });
     </script>
 </body>
+
 </html>

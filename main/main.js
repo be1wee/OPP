@@ -42,7 +42,7 @@ async function loadProjects() {
                     <div class="empty-icon">📂</div>
                     <h3>No Projects Yet</h3>
                     <p>You haven't joined or created any projects.</p>
-                    <button class="nav-btn create" onclick="window.location.href='create-project.html'">Create First Project</button>
+                    <button class="nav-btn create" onclick="window.location.href='/create_project'">Create First Project</button>
                 </div>
             `;
             return;
