@@ -16,9 +16,11 @@
 }
 
 body {
+    /* overflow: hidden; */
+
     background: var(--bg-dark);
     color: var(--text);
-    min-height: 100vh;
+    max-height: 100vh;
     position: relative;
 }
 
@@ -50,7 +52,7 @@ body {
 .project-header {
     background: rgba(10, 10, 15, 0.9);
     border-bottom: 1px solid var(--border);
-    padding: 25px 40px;
+    padding: 10px 40px;
     backdrop-filter: blur(10px);
 }
 
@@ -82,16 +84,16 @@ body {
     font-weight: 600;
     margin-bottom: 5px;
     background: linear-gradient(90deg, var(--text), var(--text-secondary));
+    background-clip:text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .workspace {
-    padding: 40px 20px;
+    padding: 40px 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    min-height: calc(100vh - 80px);
+    align-items: center;
 }
 
 .form-container {
@@ -158,11 +160,10 @@ body {
 }
 
 .form-actions {
+    margin-top: 40px;
     display: flex;
+    width: 100%;
     gap: 15px;
-    margin-top: 35px;
-    padding-top: 25px;
-    border-top: 1px solid var(--border);
 }
 
 .btn-primary,

@@ -73,7 +73,7 @@ body {
 .task-header {
     background: rgba(10, 10, 15, 0.9);
     border-bottom: 1px solid var(--border);
-    padding: 25px 40px;
+    padding: 25px 40px 25px 200px;
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
