@@ -29,7 +29,7 @@ async function loadAllTasksForParentSelection(projectId) {
 
     try {
         const token = localStorage.getItem('auth_token');
-        const response = await axios.get(`http://localhost:8000/api/projects/${projectId}/tasks`, {
+        const response = await axios.get(`http://193.124.112.102/api/projects/${projectId}/tasks`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -56,7 +56,7 @@ async function loadProjectMembers(projectId) {
     try {
         const token = localStorage.getItem('auth_token');
 
-        const response = await axios.get(`http://localhost:8000/api/projects/${projectId}/members`, {
+        const response = await axios.get(`http://193.124.112.102/api/projects/${projectId}/members`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -116,7 +116,7 @@ function setupForm(projectId) {
                 owner_id: assigneeId
             };
 
-            const response = await axios.post(`http://localhost:8000/api/projects/${projectId}/tasks`, taskData, {
+            const response = await axios.post(`http://193.124.112.102/api/projects/${projectId}/tasks`, taskData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

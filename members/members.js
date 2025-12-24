@@ -19,13 +19,13 @@ async function loadData() {
         const token = localStorage.getItem('auth_token');
 
         const [projectRes, membersRes, tasksRes] = await Promise.all([
-            axios.get(`http://localhost:8000/api/projects/${projectId}`, {
+            axios.get(`http://193.124.112.102/api/projects/${projectId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             }),
-            axios.get(`http://localhost:8000/api/projects/${projectId}/members`, {
+            axios.get(`http://193.124.112.102/api/projects/${projectId}/members`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             }),
-            axios.get(`http://localhost:8000/api/projects/${projectId}/tasks`, {
+            axios.get(`http://193.124.112.102/api/projects/${projectId}/tasks`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
         ]);
@@ -201,7 +201,7 @@ async function changeRole(userId) {
         const select = document.getElementById(`role-${userId}`);
         const newRole = select.value;
 
-        await axios.put(`http://localhost:8000/api/projects/${projectId}/members/${userId}/role`, {
+        await axios.put(`http://193.124.112.102/api/projects/${projectId}/members/${userId}/role`, {
             role: newRole
         }, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -236,7 +236,7 @@ async function removeMember(userId) {
     try {
         const token = localStorage.getItem('auth_token');
 
-        await axios.delete(`http://localhost:8000/api/projects/${projectId}/members/${userId}`, {
+        await axios.delete(`http://193.124.112.102/api/projects/${projectId}/members/${userId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 

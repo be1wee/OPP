@@ -22,7 +22,7 @@ async function loadProjects() {
     try {
         const token = localStorage.getItem('auth_token');
 
-        const response = await axios.get('http://localhost:8000/api/projects', {
+        const response = await axios.get('http://193.124.112.102/api/projects', {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'

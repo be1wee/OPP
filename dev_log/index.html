@@ -102,6 +102,7 @@
             font-weight: 700;
             margin-bottom: 5px;
             background: linear-gradient(90deg, var(--text), var(--text-secondary));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -289,7 +290,7 @@
         
         async function loadPosts() {
             try {
-                const response = await axios.get('http://localhost:8000/api/devlog/posts');
+                const response = await axios.get('http://193.124.112.102/api/devlog/posts');
                 const posts = response.data.data || [];
                 renderPosts(posts);
                 

@@ -17,7 +17,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     const password = document.getElementById("password").value;
 
     try {
-        const response = await axios.post("http://localhost:8000/api/login", {
+        const response = await axios.post("http://193.124.112.102/api/login", {
             email: email,
             password: password
         });

@@ -270,7 +270,7 @@
                     return;
                 }
                 
-                const response = await axios.get(`http://localhost:8000/api/projects/${projectId}`, {
+                const response = await axios.get(`http://193.124.112.102/api/projects/${projectId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
@@ -319,14 +319,14 @@
                     action_status: parseInt(document.getElementById('projectStatus').value)
                 };
                 
-                // Remove empty fields
+                
                 Object.keys(formData).forEach(key => {
                     if (formData[key] === '' || formData[key] === null || formData[key] === undefined) {
                         delete formData[key];
                     }
                 });
                 
-                const response = await axios.put(`http://localhost:8000/api/projects/${projectId}`, formData, {
+                const response = await axios.put(`http://193.124.112.102/api/projects/${projectId}`, formData, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -353,7 +353,7 @@
                 try {
                     const token = localStorage.getItem('auth_token');
                     
-                    await axios.delete(`http://localhost:8000/api/projects/${projectId}`, {
+                    await axios.delete(`http://193.124.112.102/api/projects/${projectId}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     

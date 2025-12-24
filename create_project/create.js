@@ -17,8 +17,8 @@ document.getElementById("projectForm").addEventListener("submit", async (e) => {
     const deadline = deadlineInput ? new Date(deadlineInput).toISOString() : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
     try {
-        const response = await axios.post(
-            "http://localhost:8000/api/projects",
+        const response = await api.post(
+            "/api/projects",
             {
                 name: name,
                 subject: subject,

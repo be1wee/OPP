@@ -112,7 +112,7 @@
         async function loadProject() {
             try {
                 const token = localStorage.getItem('auth_token');
-                const response = await axios.get(`http://localhost:8000/api/projects/${projectId}`, {
+                const response = await axios.get(`http://193.124.112.102/api/projects/${projectId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -139,7 +139,7 @@
         async function loadTasks() {
             try {
                 const token = localStorage.getItem('auth_token');
-                const response = await axios.get(`http://localhost:8000/api/projects/${projectId}/tasks`, {
+                const response = await axios.get(`http://193.124.112.102/api/projects/${projectId}/tasks`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

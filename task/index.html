@@ -220,7 +220,7 @@
             try {
                 const token = localStorage.getItem('auth_token');
                 
-                const response = await axios.get(`http://localhost:8000/api/tasks/${taskId}`, {
+                const response = await axios.get(`http://193.124.112.102/api/tasks/${taskId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
@@ -293,7 +293,7 @@
             try {
                 const token = localStorage.getItem('auth_token');
                 
-                const response = await axios.put(`http://localhost:8000/api/tasks/${taskId}`, {
+                const response = await axios.put(`http://193.124.112.102/api/tasks/${taskId}`, {
                     title: newTitle
                 }, {
                     headers: {
@@ -339,7 +339,7 @@
             try {
                 const token = localStorage.getItem('auth_token');
                 
-                const response = await axios.put(`http://localhost:8000/api/tasks/${taskId}`, {
+                const response = await axios.put(`http://193.124.112.102/api/tasks/${taskId}`, {
                     description: newDescription || null
                 }, {
                     headers: {
@@ -373,7 +373,7 @@
                 
                 const token = localStorage.getItem('auth_token');
                 
-                const response = await axios.get(`http://localhost:8000/api/tasks/${taskData.parent_task_id}`, {
+                const response = await axios.get(`http://193.124.112.102/api/tasks/${taskData.parent_task_id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
@@ -453,7 +453,7 @@
             try {
                 const token = localStorage.getItem('auth_token');
                 
-                await axios.delete(`http://localhost:8000/api/tasks/${taskId}`, {
+                await axios.delete(`http://193.124.112.102/api/tasks/${taskId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
@@ -507,7 +507,7 @@
                 
                 const updateData = { [field]: value };
                 
-                const response = await axios.put(`http://localhost:8000/api/tasks/${taskId}`, updateData, {
+                const response = await axios.put(`http://193.124.112.102/api/tasks/${taskId}`, updateData, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'

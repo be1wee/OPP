@@ -17,7 +17,7 @@ document.getElementById("joinForm").addEventListener("submit", async (e) => {
 
     try {
         const response = await axios.post(
-            "http://localhost:8000/api/projects/join",
+            "http://193.124.112.102/api/projects/join",
             {
                 project_id: projectId
             },

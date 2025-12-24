@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = 'http://193.124.112.102';
 
 const api = {
     async get(url) {
