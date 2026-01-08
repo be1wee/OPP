@@ -382,7 +382,7 @@ body {
     border-radius: 12px;
     padding: 25px;
     backdrop-filter: blur(10px);
-    width: 300px;
+    width: 350px;
     flex-shrink: 0;
 }
 
@@ -424,6 +424,9 @@ body {
     color: var(--primary);
     font-weight: 600;
     word-break: break-all;
+    background-color: rgba(0, 0, 0, 0.134);
+    border-radius: 20px;
+    padding: 20px;
 }
 
 .copy-btn {

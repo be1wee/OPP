@@ -248,13 +248,4 @@ async function removeMember(userId) {
     }
 }
 
-function copyProjectId() {
-    const projectIdText = projectData?.id || '';
-    navigator.clipboard.writeText(projectIdText).then(() => {
-        alert("Project ID copied to clipboard!");
-    });
-}
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('backBtn').href = `/project/project.html?id=${projectId}`;
-    loadProject();
-});
+
