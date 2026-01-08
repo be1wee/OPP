@@ -35,7 +35,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             const errors = error.response.data.errors;
             if (errors) {
                 const errorMessages = Object.values(errors).flat().join(', ');
-                alert("Ошибка валидации: " + errorMessages);
+                alert("Ошибка валидации: " + errorMessages + "Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
             } else {
                 alert("Ошибка валидации");
             }
