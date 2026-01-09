@@ -90,6 +90,7 @@ function renderMembers(tasks) {
         const memberInitial = member.email.charAt(0).toUpperCase();
         const isCurrentUser = member.email === userEmail;
 
+        // Простая HTML строка без сложных вызовов
         card.innerHTML = `
             ${isOwner && !isCurrentUser ? `
                 <button class="remove-member-btn" onclick="removeMember('${member.user_id}')">×</button>
@@ -101,9 +102,9 @@ function renderMembers(tasks) {
                     <h3>${member.email}</h3>
                     <div class="role-display" id="role-display-${member.user_id}">
                         ${member.is_owner ?
-                '<div class="member-role role-owner">Owner</div>' :
-                `<div class="member-role role-${member.role.toLowerCase()}">${member.role}</div>`
-            }
+                            '<div class="member-role role-owner">Owner</div>' :
+                            `<div class="member-role role-${member.role.toLowerCase()}">${member.role}</div>`
+                        }
                         ${isOwner && !member.is_owner ? `
                             <button class="change-role-btn" onclick="showRoleSelect('${member.user_id}', '${member.role}')">
                                 Change Role
@@ -134,14 +135,115 @@ function renderMembers(tasks) {
                         <span class="task-status status-${task.status}">${getTaskStatusText(task.status)}</span>
                     </div>
                 `).join('')}
-                ${memberTasks.length > 3 ? `<div class="task-item">+ ${memberTasks.length - 3} more tasks</div>` : ''}
+                ${memberTasks.length > 3 ? `
+                    <div class="task-item more-tasks" data-user-id="${member.user_id}" data-email="${member.email}">
+                        + ${memberTasks.length - 3} more tasks
+                    </div>
+                ` : ''}
             </div>
         `;
 
         grid.appendChild(card);
     });
+
+    // Добавляем обработчики кликов после рендеринга
+    setTimeout(() => {
+        document.querySelectorAll('.more-tasks').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const userId = this.getAttribute('data-user-id');
+                const email = this.getAttribute('data-email');
+                const tasks = userTasksByMember[userId] || [];
+                showAllTasks(userId, email, tasks);
+            });
+        });
+    }, 0);
+}
+function showAllTasks(userId, email, tasks) {
+    console.log('Showing all tasks for:', email, tasks); // Для отладки
+    
+    const modal = document.getElementById('allTasksModal');
+    const modalMemberName = document.getElementById('modalMemberName');
+    const modalMemberInfo = document.getElementById('modalMemberInfo');
+    const allTasksList = document.getElementById('allTasksList');
+    
+    // Находим данные участника
+    const member = members.find(m => m.user_id === userId);
+    
+    // Обновляем заголовок
+    modalMemberName.textContent = email;
+    modalMemberInfo.innerHTML = `
+        <div style="display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; margin-right: 10px;" 
+             class="role-${member.is_owner ? 'owner' : member.role.toLowerCase()}">
+            ${member.is_owner ? 'Owner' : member.role}
+        </div>
+        <div style="margin-top: 5px; color: var(--text-secondary);">${tasks.length} tasks in total</div>
+    `;
+    
+    // Очищаем и заполняем список задач
+    allTasksList.innerHTML = '';
+    
+    if (tasks.length === 0) {
+        allTasksList.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; color: var(--text-secondary);">
+                No tasks assigned to this member
+            </div>
+        `;
+    } else {
+        tasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'all-task-item';
+            
+            const description = task.description ? 
+                `<div class="task-description">${task.description}</div>` : '';
+            
+            const deadline = task.deadline ? 
+                `<span class="meta-tag deadline">
+                    Due: ${new Date(task.deadline).toLocaleDateString()}
+                </span>` : '';
+            
+            const priority = task.priority ? 
+                `<span class="meta-tag priority">
+                    Priority: ${task.priority}
+                </span>` : '';
+            
+            taskElement.innerHTML = `
+                <div class="task-header">
+                    <div class="task-title">${task.title || 'Untitled Task'}</div>
+                    <span class="task-status status-${task.status || 0}">
+                        ${getTaskStatusText(task.status || 0)}
+                    </span>
+                </div>
+                ${description}
+                <div class="task-meta">
+                    ${deadline}
+                    ${priority}
+                </div>
+            `;
+            allTasksList.appendChild(taskElement);
+        });
+    }
+    
+    // Показываем модальное окно
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+function closeAllTasksModal() {
+    const modal = document.getElementById('allTasksModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
 }
 
+document.getElementById('allTasksModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAllTasksModal();
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeAllTasksModal();
+    }
+});
 function groupTasksByMember(tasks) {
     const grouped = {};
 
@@ -165,6 +267,7 @@ function getTaskStatusText(status) {
         default: return 'Unknown';
     }
 }
+
 
 function updateUserRoleInfo() {
     const roleBadge = document.getElementById('userRoleBadge');
