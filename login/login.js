@@ -41,7 +41,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         } else if (status === 422) {
             const errors = error.response.data.errors;
             const errorMessages = Object.values(errors).flat().join(', ');
-            alert("Ошибка валидации: " + errorMessages + "Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
+            alert("Ошибка валидации: " + errorMessages + ". Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
         } else {
             alert("Ошибка входа: " + status);
         }
