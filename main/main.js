@@ -1,4 +1,14 @@
+let alertWindow, alertContent, alertCloseBtn;
+
 document.addEventListener('DOMContentLoaded', function () {
+    alertWindow = document.getElementById('alert')
+    alertContent = document.getElementById('alert-content')
+    alertCloseBtn = document.getElementById('alert-close-btn')
+
+    alert("HI");
+    showAlert();
+    alertCloseBtn.addEventListener('click', closeAlert)
+
     const token = localStorage.getItem('auth_token');
     const currentPage = window.location.pathname;
 
@@ -17,6 +27,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     loadProjects();
 });
+
+function showAlert(){
+    if (alertWindow && alertContent) {
+        alertWindow.style.display = 'flex';
+        alertContent.textContent = 'Hello, world!';
+    }
+}
+function closeAlert(){
+    if (alertWindow){
+        alertWindow.style.display = 'none';
+    }
+}
+
 
 async function loadProjects() {
     try {
