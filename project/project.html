@@ -7,6 +7,7 @@
     <title>Project</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="modalManager/modal.js"></script>
     <style>
         .task-click-area {
             position: absolute;
@@ -105,7 +106,7 @@
         let allTasks = [];
 
         if (!projectId) {
-            alert("Project ID missing");
+            Modal.show('Project ID missing');
             window.location.href = "/";
         }
 

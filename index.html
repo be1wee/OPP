@@ -9,6 +9,7 @@
     <script src="main/main.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
     <script src="api.js"></script>
+    <script src="modalManager/modal.js"></script>
 </head>
 
 <body>
@@ -32,12 +33,16 @@
         <div id="projects" class="list-project">
         </div>
     </main>
-
-    <div id="alert">
-        <p id="alert-content"></p>
-        <button id="alert-close-btn">OK</button>
+    <div id="logout-modal">
+        <div id="logout-alert">
+            <p id="logout-alert-content">Выйти из аккаунта?</p>
+            <div class="logout-btns">
+                <button id="yes">Да</button>
+                <button id="no">Нет</button>
+            </div>
+        </div>
     </div>
-    
+
     <style>
         .logout-btn {
             background: rgba(252, 129, 129, 0.2);
@@ -60,20 +65,20 @@
         }
     </style>
 
-    <script>
+    <script>  
         async function logout() {
-            if (!confirm('Are you sure you want to logout?')) {
-                return;
-            }
-
-            try {
-                await api.post('/logout');
-            } catch (error) {
-            } finally {
-                localStorage.removeItem('auth_token');
-                localStorage.removeItem('userEmail');
-                window.location.href = '../login/index.html';
-            }
+            customConfirm().then(answer => {
+                if (answer) {
+                    try {
+                        api.post('/logout');
+                    } catch (error) {
+                    } finally {
+                        localStorage.removeItem('auth_token');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = '../login/index.html';
+                    }
+                }
+            }); 
         }
     </script>
 </body>

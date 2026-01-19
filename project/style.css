@@ -102,6 +102,7 @@
         font-weight: 700;
         margin-bottom: 5px;
         background: linear-gradient(90deg, var(--text), var(--text-secondary));
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -208,7 +209,8 @@
         border-radius: 8px;
         padding: 20px;
         transition: all 0.3s ease;
-        cursor: pointer;
+        cursor: pointer;        
+        word-wrap: break-word;
     }
 
     .task-item:hover {

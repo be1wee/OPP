@@ -7,6 +7,7 @@
     <title>Task Details</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../modalManager/modal.js"></script>
     <style>
         .edit-mode {
             display: none;
@@ -277,7 +278,7 @@
         let originalDescription = '';
 
         if (!taskId || !projectId) {
-            alert("Task ID or Project ID missing");
+            Modal.show('Task ID or Project ID missing');
             window.location.href = "/";
         }
 
@@ -285,7 +286,6 @@
             document.getElementById('backBtn').href = `/project/project.html?id=${projectId}`;
             loadTask();
             
-            // Добавляем обработчик для Escape
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     if (document.getElementById('descriptionEditContainer').style.display !== 'none') {
@@ -318,7 +318,9 @@
                 if (error.response?.status === 401) {
                     window.location.href = '/login/';
                 } else if (error.response?.status === 404) {
-                    alert("Task not found");
+                    // alert("Task not found");
+                    Modal.show('Task not found');
+
                     window.location.href = `/project/project.html?id=${projectId}`;
                 }
             }
@@ -369,12 +371,7 @@
 
         async function saveTitle() {
             const newTitle = document.getElementById('taskTitleInput').value.trim();
-            
-            if (!newTitle) {
-                alert("Title cannot be empty");
-                return;
-            }
-            
+        
             if (newTitle === originalTitle) {
                 cancelTitleEdit();
                 return;
@@ -397,11 +394,14 @@
                 document.getElementById('taskTitle').textContent = newTitle;
                 cancelTitleEdit();
                 
-                alert("Title updated successfully!");
+                // alert("Title updated successfully!");
+                Modal.show('Title updated successfully!');
+
                 
             } catch (error) {
                 console.error("Error updating title:", error);
-                alert("Failed to update title: " + (error.response?.data?.message || error.message));
+                // alert("Failed to update title: " + (error.response?.data?.message || error.message));
+                Modal.show('Failed to update title: ' + (error.response?.data?.message || error.message));
             }
         }
 
@@ -413,13 +413,9 @@
         }
 
         function enableDescriptionEdit() {
-            // Скрываем режим просмотра
             document.getElementById('taskDescription').style.display = 'none';
-            // Показываем режим редактирования
             document.getElementById('descriptionEditContainer').style.display = 'block';
-            // Скрываем кнопку редактирования
             document.getElementById('editDescriptionBtn').style.display = 'none';
-            // Фокус на текстовое поле
             document.getElementById('taskDescriptionInput').focus();
             document.getElementById('taskDescriptionInput').select();
         }
@@ -457,22 +453,22 @@
                 }
                 
                 cancelDescriptionEdit();
-                alert("Description updated successfully!");
+                // alert("Description updated successfully!");
+                Modal.show('Description updated successfully!');
+
                 
             } catch (error) {
                 console.error("Error updating description:", error);
-                alert("Failed to update description: " + (error.response?.data?.message || error.message));
+                // alert("Failed to update description: " + (error.response?.data?.message || error.message));
+                Modal.show('Failed to update description: ' + (error.response?.data?.message || error.message));
+
             }
         }
 
         function cancelDescriptionEdit() {
-            // Восстанавливаем оригинальное значение
             document.getElementById('taskDescriptionInput').value = originalDescription;
-            // Показываем режим просмотра
             document.getElementById('taskDescription').style.display = 'block';
-            // Скрываем режим редактирования
             document.getElementById('descriptionEditContainer').style.display = 'none';
-            // Показываем кнопку редактирования
             document.getElementById('editDescriptionBtn').style.display = 'flex';
         }
 
@@ -566,12 +562,15 @@
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
-                alert("Task deleted successfully!");
+                // alert("Task deleted successfully!");
+                Modal.show('Task deleted successfully!');
+
                 window.location.href = `/project/project.html?id=${projectId}`;
                 
             } catch (error) {
                 console.error("Error deleting task:", error);
-                alert("Failed to delete task: " + (error.response?.data?.message || error.message));
+                // alert("Failed to delete task: " + (error.response?.data?.message || error.message));
+                Modal.show("Failed to delete task: " + (error.response?.data?.message || error.message));
             }
         }
 
@@ -586,7 +585,9 @@
             
             const statusNum = parseInt(newStatus);
             if (isNaN(statusNum) || statusNum < 0 || statusNum > 2) {
-                alert("Invalid status. Please enter 0, 1, or 2.");
+                // alert("Invalid status. Please enter 0, 1, or 2.");
+                Modal.show("Invalid status. Please enter 0, 1, or 2.");
+
                 return;
             }
             
@@ -623,12 +624,16 @@
                     }
                 });
                 
-                alert("Task updated successfully!");
+                // alert("Task updated successfully!");
+                Modal.show('Task updated successfully!');
+
                 loadTask();
                 
             } catch (error) {
                 console.error("Error updating task:", error);
-                alert("Failed to update task: " + (error.response?.data?.message || error.message));
+                // alert("Failed to update task: " + (error.response?.data?.message || error.message));
+                Modal.show("Failed to update task: " + (error.response?.data?.message || error.message));
+                
             }
         }
     </script>

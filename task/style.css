@@ -165,12 +165,12 @@ body {
     border-radius: 12px;
     padding: 30px;
     backdrop-filter: blur(10px);
-    width: 40vw;
+    max-width: 40vw;
 }
 
 .details-section {
     margin-bottom: 35px;
-    max-width: 40vw;
+    
 }
 
 .details-section>h2 {

@@ -90,7 +90,6 @@ function renderMembers(tasks) {
         const memberInitial = member.email.charAt(0).toUpperCase();
         const isCurrentUser = member.email === userEmail;
 
-        // Простая HTML строка без сложных вызовов
         card.innerHTML = `
             ${isOwner && !isCurrentUser ? `
                 <button class="remove-member-btn" onclick="removeMember('${member.user_id}')">×</button>

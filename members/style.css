@@ -24,7 +24,6 @@ body {
 
 
 
-/* Стили для расширенного просмотра задач */
 .task-item.more-tasks {
     color: var(--primary);
     cursor: pointer;
@@ -54,8 +53,9 @@ body {
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(5px);
+}::-webkit-scrollbar {
+    display: none;
 }
-
 .all-tasks-content {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -818,6 +818,7 @@ body {
     font-size: 0.9rem;
     line-height: 1.5;
     margin: 10px 0;
+    word-wrap: break-word;
 }
 
 .children {

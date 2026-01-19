@@ -10,6 +10,8 @@ a {
     text-decoration: none;
 }
 
+
+
 :root {
     --gap: 3vw;
     --primary-gradient: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
@@ -28,35 +30,60 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-#alert{
+#logout-modal{
+    display: none;
     position: fixed;
-    top: 10%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.284);
+    backdrop-filter: blur(10px);
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    animation: fadeIn 0.5s;
+}
+#logout-alert{
+    position: fixed;
+    top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     background-color: rgba(59, 22, 101, 0.259);
-    box-shadow: 0px 0px 10px 1px white;
     border-radius: 12px;
-    z-index: 999;
-    display: none;
+    border: 1px solid rgba(255, 255, 255, 0.122);
+    display: flex;
     gap: 1vw;
     align-items: center;
     flex-direction: column;
     padding: 1vw;
     backdrop-filter: blur(10px);
 }
-#alert>button{
+.logout-btns>button{
     border: none;
+    outline: none;
     border-radius: 12px;
     padding-left: 1vw;
     padding-right: 1vw;
     padding-top: 8px;
     padding-bottom: 8px;
-    background-color: rgb(59, 22, 101);
     transition: all 0.3s ease;
 }
-#alert>button:hover{
+#yes{
+    background-color: seagreen;
+}
+#no{
+    background-color: red;
+}
+.logout-btns>button:hover{
     background-color: rgb(80, 33, 134);
     transform: translateY(-3px);
+}
+.logout-btns>button:focus{
+    border: none;
+    outline: none;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .liquid-bg {
