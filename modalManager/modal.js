@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             height: 100vh;
             z-index: 9999;
             animation: fadeIn 0.5s;
+            color: white;
         }
         #alert{
             position: fixed;
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             padding-bottom: 8px;
             background-color: rgb(59, 22, 101);
             transition: all 0.3s ease;
+            color: white;
         }
         #alert>button:hover{
             background-color: rgb(80, 33, 134);

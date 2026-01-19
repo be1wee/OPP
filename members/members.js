@@ -5,7 +5,9 @@ let userRole = 'member';
 let isOwner = false;
 
 if (!projectId) {
-    alert("Project ID missing");
+    // alert("Project ID missing");
+    Modal.show('Project ID missing');
+
     window.location.href = "/";
 }
 
@@ -313,13 +315,17 @@ async function changeRole(userId) {
 
     } catch (error) {
         console.error("Error changing role:", error);
-        alert("Failed to change role: " + (error.response?.data?.message || error.message));
+        // alert("Failed to change role: " + (error.response?.data?.message || error.message));
+        Modal.show("Failed to change role: " + (error.response?.data?.message || error.message));
+
     }
 }
 
 async function removeMember(userId) {
     if (!isOwner) {
-        alert("Only project owner can remove members");
+        // alert("Only project owner can remove members");
+        Modal.show('Only project owner can remove members');
+
         return;
     }
 
@@ -331,7 +337,9 @@ async function removeMember(userId) {
     }
 
     if (memberToRemove.is_owner) {
-        alert("Cannot remove project owner");
+        // alert("Cannot remove project owner");
+        Modal.show('Cannot remove project owner');
+
         return;
     }
 
@@ -346,7 +354,9 @@ async function removeMember(userId) {
 
     } catch (error) {
         console.error("Error removing member:", error);
-        alert("Failed to remove member: " + (error.response?.data?.message || error.message));
+        // alert("Failed to remove member: " + (error.response?.data?.message || error.message));
+        Modal.show("Failed to remove member: " + (error.response?.data?.message || error.message));
+
     }
 }
 

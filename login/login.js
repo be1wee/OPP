@@ -25,25 +25,32 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         localStorage.setItem("auth_token", response.data.token);
         localStorage.setItem("userEmail", email);
 
-        alert("Успешный вход!");
+        // alert("Успешный вход!");
+        Modal.show('Успешный вход!');
+
         window.location.href = "../";
 
     } catch (error) {
         if (!error.response) {
-            alert("Ошибка сети. Сервер недоступен.");
+            // alert("Ошибка сети. Сервер недоступен.");
+            Modal.show('Ошибка сети. Сервер недоступен.');
+
             return;
         }
 
         const status = error.response.status;
 
         if (status === 401) {
-            alert("Неверный email или пароль.");
+            // alert("Неверный email или пароль.");
+            Modal.show('Неверный email или пароль.');
         } else if (status === 422) {
             const errors = error.response.data.errors;
             const errorMessages = Object.values(errors).flat().join(', ');
-            alert("Ошибка валидации: " + errorMessages + ". Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
+            // alert("Ошибка валидации: " + errorMessages + ". Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
+            Modal.show("Ошибка валидации: " + errorMessages + ". Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
         } else {
-            alert("Ошибка входа: " + status);
+            // alert("Ошибка входа: " + status);
+            Modal.show("Ошибка входа: " + status);
         }
 
         console.log("Ошибка:", error.response.data);

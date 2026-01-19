@@ -16,13 +16,17 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         localStorage.setItem("auth_token", response.data.token);
         localStorage.setItem("userEmail", email);
 
-        alert("Регистрация прошла успешно!");
+        // alert("Регистрация прошла успешно!");
+        Modal.show('Регистрация прошла успешно!');
+
 
         window.location.href = "../";
 
     } catch (error) {
         if (!error.response) {
-            alert("Ошибка сети. Сервер недоступен.");
+            // alert("Ошибка сети. Сервер недоступен.");
+            Modal.show('Ошибка сети. Сервер недоступен.');
+
             console.error("Ошибка сети:", error);
             return;
         }
@@ -30,19 +34,25 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         const status = error.response.status;
 
         if (status === 409) {
-            alert("Пользователь с таким email уже зарегистрирован!");
+            // alert("Пользователь с таким email уже зарегистрирован!");
+            Modal.show('Пользователь с таким email уже зарегистрирован!');
+
         } else if (status === 422) {
             const errors = error.response.data.errors;
             if (errors) {
                 const errorMessages = Object.values(errors).flat().join(', ');
-                alert("Ошибка валидации: " + errorMessages + "Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
+                // alert("Ошибка валидации: " + errorMessages + "Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
+                Modal.show("Ошибка валидации: " + errorMessages + "Пароль должен содердать буквы и цифры. Длина пароля должна быть больше 2");
             } else {
-                alert("Ошибка валидации");
+                // alert("Ошибка валидации");
+                Modal.show('Ошибка валидации');
             }
         } else if (error.response.data && error.response.data.message) {
-            alert("Ошибка: " + error.response.data.message);
+            // alert("Ошибка: " + error.response.data.message);
+            Modal.show("Ошибка: " + error.response.data.message);
         } else {
-            alert("Не удалось зарегистрироваться. Статус: " + status);
+            // alert("Не удалось зарегистрироваться. Статус: " + status);
+            Modal.show("Не удалось зарегистрироваться. Статус: " + status);
         }
 
         console.error("Ошибка регистрации:", error.response.data);

@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const projectId = new URLSearchParams(window.location.search).get("project");
 
     if (!projectId) {
-        alert("Project ID missing");
+        // alert("Project ID missing");
+        Modal.show('Project ID missing');
+
         window.location.href = "/";
         return;
     }
@@ -91,7 +93,9 @@ function setupForm(projectId) {
 
         const token = localStorage.getItem('auth_token');
         if (!token) {
-            alert("Please login first");
+            // alert("Please login first");
+            Modal.show('Please login first');
+
             window.location.href = '/login/';
             return;
         }
@@ -103,7 +107,9 @@ function setupForm(projectId) {
         const assigneeId = document.getElementById('assignee').value || null;
 
         if (!title) {
-            alert("Task title is required");
+            // alert("Task title is required");
+            Modal.show('Task title is required');
+
             return;
         }
 
@@ -123,21 +129,26 @@ function setupForm(projectId) {
                 }
             });
 
-            alert("Task created successfully!");
+            // alert("Task created successfully!");
+            Modal.show('Task created successfully!');
+
             window.location.href = `/project/project.html?id=${projectId}`;
 
         } catch (error) {
             console.error("Error creating task:", error);
 
             if (error.response?.status === 401) {
-                alert("Session expired. Please login again.");
+                // alert("Session expired. Please login again.");
+                Modal.show('Session expired. Please login again.');
                 window.location.href = '/login/';
             } else if (error.response?.status === 422) {
                 const errors = error.response.data.errors;
                 const errorMessages = Object.values(errors).flat().join(', ');
-                alert("Validation error: " + errorMessages);
+                // alert("Validation error: " + errorMessages);
+                Modal.show("Validation error: " + errorMessages);
             } else {
-                alert("Error creating task: " + (error.response?.data?.message || error.message));
+                // alert("Error creating task: " + (error.response?.data?.message || error.message));
+                Modal.show("Error creating task: " + (error.response?.data?.message || error.message));
             }
         }
     });

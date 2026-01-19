@@ -9,7 +9,9 @@ document.getElementById("projectForm").addEventListener("submit", async (e) => {
     const token = localStorage.getItem('auth_token');
 
     if (!token) {
-        alert("Please login first");
+        // alert("Please login first");
+        Modal.show('Please login first');
+
         window.location.href = '/login/';
         return;
     }
@@ -33,7 +35,9 @@ document.getElementById("projectForm").addEventListener("submit", async (e) => {
             }
         );
 
-        alert("Project created successfully!");
+        // alert("Project created successfully!");
+        Modal.show('Project created successfully!');
+
         window.location.href = "../index.html";
 
     } catch (err) {
@@ -42,12 +46,18 @@ document.getElementById("projectForm").addEventListener("submit", async (e) => {
         if (err.response?.status === 422) {
             const errors = err.response.data.errors;
             const errorMessages = Object.values(errors).flat().join(', ');
-            alert("Validation error: " + errorMessages);
+            // alert("Validation error: " + errorMessages);
+            Modal.show("Validation error: " + errorMessages);
+
         } else if (err.response?.status === 401) {
-            alert("Please login again");
+            // alert("Please login again");
+            Modal.show('Please login again');
+
             window.location.href = '/login/';
         } else {
-            alert("Error: " + (err.response?.data?.message || err.message));
+            // alert("Error: " + (err.response?.data?.message || err.message));
+            Modal.show("Error: " + (err.response?.data?.message || err.message));
+
         }
     }
 });

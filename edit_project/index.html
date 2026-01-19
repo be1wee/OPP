@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Project</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../modalManager/modal.js"></script>
     <style>
         @font-face {
             font-family: "cygre";
@@ -251,7 +252,8 @@
         const projectId = params.get("id");
         
         if (!projectId) {
-            alert("Project ID missing");
+            // alert("Project ID missing");
+            Modal.show('Project ID missing');
             window.location.href = "/";
         }
 
@@ -265,7 +267,9 @@
                 const token = localStorage.getItem('auth_token');
                 
                 if (!token) {
-                    alert("Not authenticated. Please login.");
+                    // alert("Not authenticated. Please login.");
+                    Modal.show('Not authenticated. Please login.');
+
                     window.location.href = '/login/';
                     return;
                 }
@@ -280,13 +284,16 @@
             } catch (error) {
                 console.error("Error loading project:", error);
                 if (error.response?.status === 401) {
-                    alert("Session expired. Please login again.");
+                    // alert("Session expired. Please login again.");
+                    Modal.show('Session expired. Please login again.');
                     window.location.href = '/login/';
                 } else if (error.response?.status === 404) {
-                    alert("Project not found");
+                    // alert("Project not found");
+                    Modal.show('Project not found');
                     window.location.href = '/';
                 } else {
-                    alert("Error loading project: " + (error.message || "Unknown error"));
+                    // alert("Error loading project: " + (error.message || "Unknown error"));
+                    Modal.show("Error loading project: " + (error.message || "Unknown error"));
                 }
             }
         }
@@ -333,12 +340,14 @@
                     }
                 });
                 
-                alert('Project updated successfully!');
+                // alert('Project updated successfully!');
+                Modal.show('Project updated successfully!');
                 window.location.href = `/project/project.html?id=${projectId}`;
                 
             } catch (error) {
                 console.error("Error updating project:", error);
-                alert("Failed to update project: " + (error.response?.data?.message || error.message));
+                // alert("Failed to update project: " + (error.response?.data?.message || error.message));
+                Modal.show("Failed to update project: " + (error.response?.data?.message || error.message));
             }
         });
         
@@ -357,12 +366,14 @@
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     
-                    alert('Project deleted successfully!');
+                    // alert('Project deleted successfully!');
+                    Modal.show('Project deleted successfully!');
                     window.location.href = '/';
                     
                 } catch (error) {
                     console.error("Error deleting project:", error);
-                    alert("Failed to delete project: " + (error.response?.data?.message || error.message));
+                    // alert("Failed to delete project: " + (error.response?.data?.message || error.message));
+                    Modal.show("Failed to delete project: " + (error.response?.data?.message || error.message));
                 }
             }
         }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Task</title>
     <link rel="stylesheet" href="style.css">
+    <script src="../modalManager/modal.js"></script>
 </head>
 
 <body>
@@ -80,27 +81,6 @@
             </form>
         </div>
     </main>
-
-    <!-- <script>
-        document.getElementById('createTaskForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const taskData = {
-                title: document.getElementById('taskTitle').value,
-                description: document.getElementById('taskDescription').value,
-                parent: document.getElementById('parentTask').value,
-                assignee: document.getElementById('assignee').value,
-                deadline: document.getElementById('deadline').value,
-                priority: document.getElementById('priority').value,
-                status: document.getElementById('status').value
-            };
-
-            console.log('Creating task:', taskData);
-            alert('Task created successfully!');
-        });
-
-        document.getElementById('deadline').valueAsDate = new Date();
-    </script> -->
     <script src="task.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
